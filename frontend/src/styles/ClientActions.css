@@ -1,0 +1,37 @@
+.client-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+.btn-action {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.btn-facture {
+  background-color: var(--color-info-light);
+  color: var(--color-info);
+}
+
+.btn-facture:hover {
+  background-color: var(--color-info);
+  color: white;
+}
+
+.btn-contrat {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.btn-contrat:hover {
+  background-color: var(--color-success);
+  color: white;
+}

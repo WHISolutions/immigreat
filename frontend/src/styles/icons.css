@@ -1,0 +1,218 @@
+/* Système d'icônes cohérent pour l'application ImmiPro
+   Basé sur Font Awesome avec des styles personnalisés */
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Tailles d'icônes standardisées */
+.icon-xs {
+  font-size: var(--font-size-xs);
+}
+
+.icon-sm {
+  font-size: var(--font-size-sm);
+}
+
+.icon-md {
+  font-size: var(--font-size-md);
+}
+
+.icon-lg {
+  font-size: var(--font-size-lg);
+}
+
+.icon-xl {
+  font-size: var(--font-size-xl);
+}
+
+/* Couleurs d'icônes */
+.icon-primary {
+  color: var(--color-primary);
+}
+
+.icon-secondary {
+  color: var(--color-secondary);
+}
+
+.icon-success {
+  color: var(--color-success);
+}
+
+.icon-warning {
+  color: var(--color-warning);
+}
+
+.icon-error {
+  color: var(--color-error);
+}
+
+.icon-info {
+  color: var(--color-info);
+}
+
+.icon-light {
+  color: var(--text-light);
+}
+
+/* Badges de notification */
+.icon-badge {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: var(--color-secondary);
+  color: var(--text-light);
+  border-radius: var(--border-radius-full);
+  min-width: 1.125rem;
+  height: 1.125rem;
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  padding: 0 0.25rem;
+}
+
+/* Badges de statut */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}
+
+.status-badge i {
+  margin-right: 0.25rem;
+}
+
+/* Statuts standardisés */
+.status-nouveau {
+  background-color: var(--color-info);
+  color: var(--text-light);
+}
+
+.status-contacté {
+  background-color: var(--color-success);
+  color: var(--text-light);
+}
+
+.status-rendez-vous-pris {
+  background-color: #9c27b0; /* Violet */
+  color: var(--text-light);
+}
+
+.status-consultation-effectuée {
+  background-color: #7b1fa2; /* Mauve */
+  color: var(--text-light);
+}
+
+.status-qualifié {
+  background-color: #00bcd4; /* Turquoise */
+  color: var(--text-light);
+}
+
+.status-non-intéressé {
+  background-color: var(--color-neutral-dark);
+  color: var(--text-light);
+}
+
+.status-actif {
+  background-color: var(--color-success);
+  color: var(--text-light);
+}
+
+.status-en-attente {
+  background-color: var(--color-warning);
+  color: var(--text-light);
+}
+
+.status-inactif {
+  background-color: var(--color-error);
+  color: var(--text-light);
+}
+
+.status-en-cours {
+  background-color: var(--color-info);
+  color: var(--text-light);
+}
+
+.status-complété {
+  background-color: var(--color-success);
+  color: var(--text-light);
+}
+
+.status-refusé {
+  background-color: var(--color-error);
+  color: var(--text-light);
+}
+
+.status-payée {
+  background-color: var(--color-success);
+  color: var(--text-light);
+}
+
+.status-en-retard {
+  background-color: var(--color-error);
+  color: var(--text-light);
+}
+
+.status-annulée {
+  background-color: var(--color-neutral-dark);
+  color: var(--text-light);
+}
+
+.status-confirmé {
+  background-color: var(--color-info);
+  color: var(--text-light);
+}
+
+.status-terminé {
+  background-color: var(--color-success);
+  color: var(--text-light);
+}
+
+/* Animation pour les icônes interactives */
+.icon-interactive {
+  transition: transform var(--transition-fast);
+}
+
+.icon-interactive:hover {
+  transform: scale(1.2);
+}
+
+/* Icônes avec tooltip */
+.icon-tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.icon-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-neutral-dark);
+  color: var(--text-light);
+  text-align: center;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal);
+  z-index: var(--z-index-tooltip);
+}
+
+.icon-tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}

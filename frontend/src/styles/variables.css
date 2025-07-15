@@ -1,0 +1,90 @@
+:root {
+  /* Palette de couleurs principale */
+  --color-primary: #1a4b8c;        /* Bleu royal - Couleur principale */
+  --color-secondary: #d80621;      /* Rouge canadien - Couleur secondaire */
+  
+  /* Couleurs neutres */
+  --color-neutral-light: #f5f5f5;  /* Gris clair */
+  --color-neutral-medium: #e0e0e0; /* Gris moyen */
+  --color-neutral-dark: #333333;   /* Gris foncé */
+  
+  /* Couleurs fonctionnelles */
+  --color-success: #2e7d32;        /* Vert - Validations */
+  --color-error: #c62828;          /* Rouge - Alertes */
+  --color-warning: #ef6c00;        /* Orange - Avertissements */
+  --color-info: #0288d1;           /* Bleu clair - Informations */
+  
+  /* Couleurs dérivées */
+  --color-primary-light: #3a6eaf;
+  --color-primary-dark: #0e3a7c;
+  --color-secondary-light: #e63b4d;
+  --color-secondary-dark: #b80016;
+  
+  /* Couleurs de texte */
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #ffffff;
+  
+  /* Alias pour compatibilité avec les composants existants */
+  --color-text: var(--text-primary);
+  --color-white: var(--text-light);
+  --color-background: var(--color-neutral-light);
+  --color-light-gray: var(--color-neutral-medium);
+  --color-dark-gray: var(--color-neutral-dark);
+  
+  /* Typographie */
+  --font-family-title: 'Montserrat', sans-serif;
+  --font-family-body: 'Open Sans', sans-serif;
+  --font-family-base: var(--font-family-body);
+  
+  /* Tailles de police */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-md: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  
+  /* Poids de police */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Espacements */
+  --spacing-xs: 0.25rem;      /* 4px */
+  --spacing-sm: 0.5rem;       /* 8px */
+  --spacing-md: 1rem;         /* 16px */
+  --spacing-lg: 1.5rem;       /* 24px */
+  --spacing-xl: 2rem;         /* 32px */
+  --spacing-2xl: 3rem;        /* 48px */
+  --spacing-xxl: var(--spacing-2xl); /* Alias pour compatibilité */
+  
+  /* Bordures */
+  --border-radius-sm: 0.25rem; /* 4px */
+  --border-radius-md: 0.5rem;  /* 8px */
+  --border-radius-lg: 1rem;    /* 16px */
+  --border-radius-full: 9999px;
+  
+  /* Ombres */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  --transition-speed: var(--transition-normal); /* Alias pour compatibilité */
+  
+  /* Z-index */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+}

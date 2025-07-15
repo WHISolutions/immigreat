@@ -1,0 +1,44 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Démarrer Backend",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"dev"
+			],
+			"group": "build",
+			"isBackground": true,
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"problemMatcher": [
+				"$tsc"
+			]
+		},
+		{
+			"label": "Démarrer Frontend",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"start"
+			],
+			"group": "build",
+			"isBackground": true,
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Démarrer Backend et Frontend",
+			"dependsOrder": "parallel",
+			"dependsOn": [
+				"Démarrer Backend",
+				"Démarrer Frontend"
+			]
+		}
+	]
+}

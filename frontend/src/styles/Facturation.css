@@ -1,0 +1,317 @@
+.facturation-container {
+  padding: var(--spacing-lg);
+}
+
+.facturation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.facturation-header h2 {
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-primary:hover {
+  background-color: #0f3a6d;
+}
+
+.btn-primary span {
+  margin-right: var(--spacing-xs);
+  font-size: 18px;
+}
+
+.btn-secondary {
+  background-color: var(--color-light-gray);
+  color: var(--color-dark-gray);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.stats-container {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  flex: 1;
+  min-width: 150px;
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-dark-gray);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.stat-alert {
+  color: var(--color-danger);
+}
+
+.filtres-container {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  background-color: var(--color-white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.filtre-group {
+  display: flex;
+  align-items: center;
+}
+
+.filtre-group label {
+  margin-right: var(--spacing-xs);
+  color: var(--color-dark-gray);
+  font-weight: var(--font-weight-medium);
+}
+
+.filtre-group select {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-white);
+}
+
+.factures-table-container {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  max-height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+  overflow-x: auto; /* Added for horizontal scrolling */
+  position: relative; /* ⭐ Nécessaire pour l'indicateur de tri */
+}
+
+.facturation-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.facturation-table-container th,
+.facturation-table-container td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.facturation-table-container thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa; /* Or your table header background color */
+  z-index: 1;
+  color: #333;
+}
+
+.factures-table th {
+  background-color: #f8f9fa; /* Fond gris clair/blanc */
+  color: #333; /* Texte foncé */
+  text-align: left;
+  padding: var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.factures-table th:hover {
+  background-color: #e9ecef; /* Version plus foncée du gris */
+}
+
+.factures-table th:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* Colonne Actions non cliquable */
+.factures-table th:last-child {
+  cursor: default;
+  pointer-events: none;
+}
+
+.factures-table th:last-child:hover {
+  background-color: #f8f9fa;
+  transform: none;
+}
+
+/* Icônes de tri - Style moderne avec petites icônes bleues carrées */
+.sort-icon {
+  margin-left: 8px;
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background-color: #2196F3; /* Bleu moderne */
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(33, 150, 243, 0.3);
+}
+
+.sort-icon:hover {
+  background-color: #1976D2;
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(33, 150, 243, 0.4);
+}
+
+.sort-icon.active {
+  background-color: #1565C0; /* Bleu plus foncé pour l'état actif */
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(21, 101, 192, 0.4);
+}
+
+/* Animation lors du changement de tri */
+@keyframes sortChange {
+  0% { 
+    transform: scale(0.8);
+    background-color: #2196F3;
+  }
+  50% { 
+    transform: scale(1.2);
+    background-color: #1565C0;
+  }
+  100% { 
+    transform: scale(1.05);
+    background-color: #1565C0;
+  }
+}
+
+.sort-icon.active {
+  animation: sortChange 0.3s ease-out;
+}
+
+/* Indicateur visuel pour la colonne triée */
+.factures-table th.sorted {
+  background-color: #e3f2fd !important; /* Fond bleu très clair */
+  position: relative;
+}
+
+.factures-table th.sorted::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #2196F3;
+}
+
+/* Amélioration des styles de ligne */
+.factures-table tbody tr {
+  transition: background-color 0.2s ease; /* Transition seulement sur la couleur de fond */
+}
+
+.factures-table tbody tr:hover {
+  background-color: #f8f9fa !important;
+  /* 🔴 SUPPRESSION: transform: translateX(2px); - Causait le mouvement du bouton Actions */
+  /* 🔴 SUPPRESSION: box-shadow: 2px 0 5px rgba(0,0,0,0.1); - Peut aussi causer du mouvement */
+}
+
+/* Styles spécifiques pour le bouton Actions - Stabilité garantie */
+.btn-action {
+  background-color: var(--color-light-gray);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s ease; /* Transition seulement sur la couleur */
+  /* Empêcher tout mouvement */
+  transform: none !important;
+  position: relative; /* Assurer une position stable */
+}
+
+.btn-action:hover {
+  background-color: #d0d0d0; /* Légère variation de couleur au survol */
+  /* Aucune transformation - le bouton reste en place */
+  transform: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive design pour le tri */
+@media (max-width: 768px) {
+  .sort-icon {
+    font-size: 8px;
+    width: 14px;
+    height: 14px;
+    margin-left: 4px;
+  }
+  
+  .factures-table th {
+    padding: var(--spacing-sm);
+    font-size: 12px;
+  }
+}
+
+/* 🔴 CLASSE POUR LES FACTURES EN RETARD */
+.facture-en-retard {
+  background-color: #ffe6e6 !important; /* Rouge clair */
+  border-left: 4px solid #dc3545; /* Bordure rouge à gauche */
+}
+
+.facture-en-retard:hover {
+  background-color: #ffcccc !important; /* Rouge légèrement plus foncé au survol */
+}
+
+/* 🔴 NOUVEAU : CLASSE POUR LES FACTURES EN BROUILLON */
+.facture-brouillon {
+  background-color: #fff8e1 !important; /* Jaune très clair */
+  border-left: 4px solid #ffc107; /* Bordure jaune à gauche */
+}
+
+.facture-brouillon:hover {
+  background-color: #fff3c4 !important; /* Jaune légèrement plus foncé au survol */
+}

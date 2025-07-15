@@ -1,0 +1,525 @@
+/* Journal d'activité - Styles */
+.journal-activite {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.journal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.journal-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5em;
+  font-weight: 600;
+}
+
+.journal-description {
+  margin: 0;
+  font-size: 1.1em;
+  opacity: 0.9;
+}
+
+/* Section des filtres */
+.filters-section {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters-section h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 1.3em;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+.filter-group select,
+.filter-group input {
+  padding: 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.filters-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.reset-filters-btn,
+.export-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.reset-filters-btn {
+  background-color: #f8f9fa;
+  color: #666;
+  border: 2px solid #dee2e6;
+}
+
+.reset-filters-btn:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.export-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.export-btn:hover {
+  background-color: #218838;
+}
+
+.export-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Section des logs */
+.logs-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #e1e5e9;
+  background-color: #f8f9fa;
+}
+
+.logs-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.3em;
+}
+
+.pagination-info {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Tableau des logs */
+.logs-table-container {
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.logs-table th {
+  background-color: #f8f9fa;
+  padding: 15px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e1e5e9;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logs-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e1e5e9;
+  vertical-align: top;
+}
+
+.log-row:hover {
+  background-color: #f8f9fa;
+}
+
+.date-cell {
+  min-width: 150px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.user-cell {
+  min-width: 180px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.action-cell {
+  min-width: 140px;
+}
+
+.action-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.action-create {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.action-update {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.action-delete {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.action-login {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.entite-cell {
+  min-width: 80px;
+  font-weight: 600;
+}
+
+.id-cell {
+  min-width: 60px;
+  font-family: monospace;
+  color: #666;
+}
+
+.ip-cell {
+  min-width: 120px;
+  font-family: monospace;
+  font-size: 12px;
+  color: #666;
+}
+
+.details-cell {
+  min-width: 80px;
+}
+
+.details-btn {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s;
+}
+
+.details-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Ligne étendue */
+.expanded-row {
+  background-color: #f8f9fa;
+}
+
+.expanded-content {
+  padding: 20px;
+  border-left: 4px solid #007bff;
+}
+
+.values-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.old-values,
+.new-values {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+}
+
+.old-values h4,
+.new-values h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 14px;
+}
+
+.old-values h4 {
+  color: #dc3545;
+}
+
+.new-values h4 {
+  color: #28a745;
+}
+
+.json-values {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.json-item {
+  margin-bottom: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.json-key {
+  font-weight: 600;
+  color: #333;
+  margin-right: 8px;
+}
+
+.json-value {
+  color: #666;
+  word-break: break-word;
+}
+
+.no-data {
+  color: #999;
+  font-style: italic;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #e1e5e9;
+}
+
+.pagination-btn {
+  padding: 10px 16px;
+  border: 2px solid #e1e5e9;
+  background-color: white;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.pagination-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 5px;
+}
+
+.pagination-number {
+  padding: 8px 12px;
+  border: 2px solid #e1e5e9;
+  background-color: white;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.pagination-number:hover:not(:disabled) {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.pagination-number.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-number:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* États de chargement et d'erreur */
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+  margin-bottom: 20px;
+}
+
+.retry-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.retry-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Indicateurs de statut des journaux d'activité */
+.journal-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.last-update {
+  color: #666;
+  font-weight: 500;
+}
+
+.realtime-indicator {
+  font-weight: 500;
+}
+
+.realtime-indicator:contains('🟢') {
+  color: #28a745;
+}
+
+.realtime-indicator:contains('🔴') {
+  color: #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .journal-activite {
+    padding: 10px;
+  }
+  
+  .journal-header {
+    padding: 20px;
+  }
+  
+  .journal-header h1 {
+    font-size: 2em;
+  }
+  
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filters-actions {
+    justify-content: center;
+  }
+  
+  .values-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .logs-table {
+    font-size: 12px;
+  }
+  
+  .logs-table th,
+  .logs-table td {
+    padding: 8px 6px;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+  }
+}

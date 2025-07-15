@@ -1,0 +1,984 @@
+// Service de notifications automatiques
+// Génère des notifications en temps réel basées sur les événements de l'application
+
+import { getAllLeads } from './leadsAPI';
+import { getAllFactures } from './facturesAPI';
+import rendezVousAPI from './rendezVousAPI';
+
+class NotificationService {
+  constructor() {
+    this.subscribers = [];
+    this.lastLeadCount = 0;
+    this.checkedFactures = new Set();
+    this.checkedRendezVous = new Set();
+    this.isRunning = false;
+    this.checkInterval = null;
+    this.userRole = null;
+    this.userName = null;
+    this.lastNotificationCheck = new Date();
+    
+    // Charger les données utilisateur
+    this.loadUserData();
+    
+    // Restaurer l'état depuis localStorage
+    this.restoreState();
+  }
+
+  // Charger les données de l'utilisateur connecté
+  loadUserData() {
+    this.userRole = localS        console.log('📊 Détail des leads assignés:');
+        userLeads.forEach((lead, index) => {
+          console.log(`  ${index + 1}. Lead ${lead.id}: ${lead.prenom} ${lead.nom}`);
+          console.log('     conseiller_id:', lead.conseiller_id || 'NULL');
+          console.log('     conseillere:', lead.conseillere || 'NULL');
+          console.log('     date_creation:', lead.date_creation || lead.createdAt);
+          console.log('     date_mise_a_jour:', lead.date_mise_a_jour || lead.updatedAt);
+        });etItem('role') || 'visiteur';
+    this.userName = localStorage.getItem('userName') || 'Utilisateur';
+  }
+
+  // Restaurer l'état du service depuis localStorage
+  restoreState() {
+    try {
+      // Restaurer les factures vérifiées
+      const savedCheckedFactures = localStorage.getItem('notificationService_checkedFactures');
+      if (savedCheckedFactures) {
+        this.checkedFactures = new Set(JSON.parse(savedCheckedFactures));
+        console.log(`🔄 ${this.checkedFactures.size} factures vérifiées restaurées`);
+      }
+
+      // Restaurer les rendez-vous vérifiés
+      const savedCheckedRendezVous = localStorage.getItem('notificationService_checkedRendezVous');
+      if (savedCheckedRendezVous) {
+        this.checkedRendezVous = new Set(JSON.parse(savedCheckedRendezVous));
+        console.log(`🔄 ${this.checkedRendezVous.size} rendez-vous vérifiés restaurés`);
+      }
+
+      // Restaurer le dernier nombre de leads
+      const savedLastLeadCount = localStorage.getItem('notificationService_lastLeadCount');
+      if (savedLastLeadCount) {
+        this.lastLeadCount = parseInt(savedLastLeadCount, 10) || 0;
+        console.log(`🔄 Dernier nombre de leads restauré: ${this.lastLeadCount}`);
+      }
+
+      // Restaurer la dernière vérification
+      const savedLastCheck = localStorage.getItem('notificationService_lastCheck');
+      if (savedLastCheck) {
+        this.lastNotificationCheck = new Date(savedLastCheck);
+        console.log(`🔄 Dernière vérification restaurée: ${this.lastNotificationCheck}`);
+      }
+
+      // Marquer les notifications existantes comme déjà vues (pour éviter les doublons toast)
+      this.markExistingNotificationsAsViewed();
+      
+    } catch (error) {
+      console.error('Erreur lors de la restauration de l\'état du service:', error);
+    }
+  }
+
+  // Marquer les notifications existantes comme déjà vues lors de l'actualisation
+  markExistingNotificationsAsViewed() {
+    try {
+      const existingNotifications = localStorage.getItem('notifications');
+      if (existingNotifications) {
+        const notifications = JSON.parse(existingNotifications);
+        const now = new Date();
+        
+        // Obtenir ou créer la liste des toasts déjà affichés
+        let shownToastIds = [];
+        try {
+          const savedShownIds = localStorage.getItem('shownToastNotifications');
+          shownToastIds = savedShownIds ? JSON.parse(savedShownIds) : [];
+        } catch (e) {
+          shownToastIds = [];
+        }
+
+        // Marquer toutes les notifications de plus de 2 minutes comme déjà affichées en toast
+        const idsToMark = notifications
+          .filter(notification => {
+            const notificationTime = new Date(notification.date);
+            const diffMinutes = (now.getTime() - notificationTime.getTime()) / (1000 * 60);
+            return diffMinutes > 2; // Plus de 2 minutes = déjà vue
+          })
+          .map(notification => notification.id);
+
+        if (idsToMark.length > 0) {
+          const updatedShownIds = [...new Set([...shownToastIds, ...idsToMark])];
+          localStorage.setItem('shownToastNotifications', JSON.stringify(updatedShownIds));
+          console.log(`🏷️ ${idsToMark.length} notifications marquées comme déjà vues`);
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors du marquage des notifications existantes:', error);
+    }
+  }
+
+  // Sauvegarder l'état du service dans localStorage
+  saveState() {
+    try {
+      localStorage.setItem('notificationService_checkedFactures', JSON.stringify(Array.from(this.checkedFactures)));
+      localStorage.setItem('notificationService_checkedRendezVous', JSON.stringify(Array.from(this.checkedRendezVous)));
+      localStorage.setItem('notificationService_lastLeadCount', this.lastLeadCount.toString());
+      localStorage.setItem('notificationService_lastCheck', this.lastNotificationCheck.toISOString());
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde de l\'état du service:', error);
+    }
+  }
+
+  // Ajouter un abonné pour recevoir les notifications
+  subscribe(callback) {
+    this.subscribers.push(callback);
+    return () => {
+      this.subscribers = this.subscribers.filter(sub => sub !== callback);
+    };
+  }
+
+  // Envoyer une notification à tous les abonnés
+  notify(notification) {
+    console.log('📢 Nouvelle notification:', notification);
+    this.subscribers.forEach(callback => callback(notification));
+  }
+
+  // Démarrer le service de surveillance
+  start() {
+    if (this.isRunning) return;
+    
+    console.log('🚀 Démarrage du service de notifications automatiques');
+    this.isRunning = true;
+    
+    // Vérification initiale
+    this.performChecks();
+    
+    // Vérifications périodiques (toutes les 30 secondes)
+    this.checkInterval = setInterval(() => {
+      this.performChecks();
+    }, 30000);
+  }
+
+  // Arrêter le service
+  stop() {
+    if (!this.isRunning) return;
+    
+    console.log('🛑 Arrêt du service de notifications automatiques');
+    this.isRunning = false;
+    
+    if (this.checkInterval) {
+      clearInterval(this.checkInterval);
+      this.checkInterval = null;
+    }
+  }
+
+  // Effectuer toutes les vérifications
+  async performChecks() {
+    try {
+      await Promise.all([
+        this.checkNewLeads(),
+        this.checkUpcomingRendezVous(),
+        this.checkFactureUpdates()
+      ]);
+    } catch (error) {
+      console.error('Erreur lors des vérifications de notifications:', error);
+    }
+  }
+
+  // Vérifier les nouveaux leads
+  async checkNewLeads() {
+    try {
+      const leadsResponse = await getAllLeads();
+      if (!leadsResponse.success || !leadsResponse.leads) {
+        console.log('Aucune donnée de leads disponible');
+        return;
+      }
+      
+      const leads = leadsResponse.leads;
+      
+      // Compter les leads d'aujourd'hui
+      const today = new Date().toDateString();
+      const todayLeads = leads.filter(lead => {
+        const leadDate = new Date(lead.dateCreation || lead.date_creation || lead.createdAt).toDateString();
+        return leadDate === today;
+      });
+
+      // Filtrer les leads récents (dernières 2 heures) pour les notifications en temps réel
+      const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
+      const recentLeads = leads.filter(lead => {
+        const leadDate = new Date(lead.dateCreation || lead.date_creation || lead.createdAt);
+        return leadDate > twoHoursAgo;
+      });
+
+      // Notifier pour les nouveaux leads (depuis la dernière vérification)
+      const newLeadsSinceLastCheck = leads.filter(lead => {
+        const leadDate = new Date(lead.dateCreation || lead.date_creation || lead.createdAt);
+        return leadDate > this.lastNotificationCheck;
+      });
+
+      if (newLeadsSinceLastCheck.length > 0) {
+        // Notification pour administrateurs et directeurs
+        if (['administrateur', 'directeur'].includes(this.userRole)) {
+          this.notify({
+            type: 'nouveau_lead',
+            message: `${newLeadsSinceLastCheck.length} nouveau${newLeadsSinceLastCheck.length > 1 ? 'x' : ''} lead${newLeadsSinceLastCheck.length > 1 ? 's' : ''} ${newLeadsSinceLastCheck.length > 1 ? 'ont été ajoutés' : 'a été ajouté'}.`,
+            date: new Date().toISOString(),
+            lienRedirection: '/leads'
+          });
+        }
+
+        // Notifier les conseillères assignées
+        newLeadsSinceLastCheck.forEach(lead => {
+          // Utiliser les vrais champs backend : conseillere et conseiller_id
+          const isAssignedToCurrentUser = 
+            lead.conseillere === this.userName ||
+            lead.conseillere?.toLowerCase() === this.userName?.toLowerCase() ||
+            (this.userId && lead.conseiller_id && parseInt(lead.conseiller_id) === parseInt(this.userId));
+            
+          if (isAssignedToCurrentUser) {
+            this.notify({
+              type: 'nouveau_lead',
+              message: `Un nouveau lead vous a été assigné : ${lead.nom || lead.prenom || 'Lead'} ${lead.prenom || ''}.`,
+              date: new Date().toISOString(),
+              nomClient: `${lead.nom || ''} ${lead.prenom || ''}`.trim(),
+              lienRedirection: '/leads'
+            });
+          }
+        });
+      }
+
+      // Résumé quotidien pour tous les utilisateurs autorisés
+      if (todayLeads.length > 0 && this.shouldSendDailySummary()) {
+        if (['administrateur', 'directeur', 'conseillere'].includes(this.userRole)) {
+          const userLeads = this.userRole === 'conseillere' 
+            ? todayLeads.filter(lead => 
+                lead.conseillere === this.userName ||
+                lead.conseillere?.toLowerCase() === this.userName?.toLowerCase() ||
+                (this.userId && lead.conseiller_id && parseInt(lead.conseiller_id) === parseInt(this.userId))
+              )
+            : todayLeads;
+
+          if (userLeads.length > 0) {
+            this.notify({
+              type: 'resume_leads',
+              message: this.userRole === 'conseillere' 
+                ? `Vous avez reçu ${userLeads.length} lead${userLeads.length > 1 ? 's' : ''} aujourd'hui.`
+                : `${todayLeads.length} lead${todayLeads.length > 1 ? 's ont été ajoutés' : ' a été ajouté'} aujourd'hui.`,
+              date: new Date().toISOString(),
+              lienRedirection: '/leads'
+            });
+          }
+        }
+      }
+
+      this.lastLeadCount = todayLeads.length;
+    } catch (error) {
+      console.error('Erreur lors de la vérification des leads:', error);
+    }
+  }
+
+  // Vérifier les rendez-vous à venir
+  async checkUpcomingRendezVous() {
+    try {
+      const rendezVousData = await rendezVousAPI.getAllRendezVous();
+      if (!rendezVousData.success || !rendezVousData.rendezVous) {
+        console.log('Aucune donnée de rendez-vous disponible');
+        return;
+      }
+      
+      const rendezVous = rendezVousData.rendezVous;
+      const now = new Date();
+      
+      // Rappel 24h avant
+      const twentyFourHoursFromNow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      const oneDayReminders = rendezVous.filter(rdv => {
+        const rdvDate = new Date(rdv.date || rdv.dateRendezVous);
+        const timeDiff = Math.abs(rdvDate.getTime() - twentyFourHoursFromNow.getTime());
+        return timeDiff <= 30 * 60 * 1000 && rdvDate > now && !this.checkedRendezVous.has(`${rdv.id}_24h`);
+      });
+
+      // Rappel 2h avant
+      const twoHoursFromNow = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+      const twoHourReminders = rendezVous.filter(rdv => {
+        const rdvDate = new Date(rdv.date || rdv.dateRendezVous);
+        const timeDiff = Math.abs(rdvDate.getTime() - twoHoursFromNow.getTime());
+        return timeDiff <= 15 * 60 * 1000 && rdvDate > now && !this.checkedRendezVous.has(`${rdv.id}_2h`);
+      });
+
+      // Rendez-vous manqués (depuis moins d'1h)
+      const missedAppointments = rendezVous.filter(rdv => {
+        const rdvDate = new Date(rdv.date || rdv.dateRendezVous);
+        const timeDiff = now.getTime() - rdvDate.getTime();
+        return timeDiff > 0 && timeDiff <= 60 * 60 * 1000 && 
+               rdv.statut !== 'termine' && rdv.statut !== 'annule' &&
+               !this.checkedRendezVous.has(`${rdv.id}_missed`);
+      });
+
+      // Notifier les rappels 24h avant
+      oneDayReminders.forEach(rdv => {
+        const shouldNotify = this.userRole === 'administrateur' || 
+                           this.userRole === 'directeur' ||
+                           (this.userRole === 'conseillere' && (rdv.conseillere === this.userName || rdv.assignee === this.userName));
+        
+        if (shouldNotify) {
+          const rdvDate = new Date(rdv.date || rdv.dateRendezVous);
+          const timeString = rdvDate.toLocaleTimeString('fr-FR', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          });
+          
+          this.notify({
+            type: 'rappel_rendez_vous',
+            message: `Rappel : Rendez-vous demain à ${timeString} avec ${rdv.nomClient || rdv.client || 'un client'}.`,
+            date: new Date().toISOString(),
+            nomClient: rdv.nomClient || rdv.client,
+            lienRedirection: '/rendez-vous'
+          });
+          
+          this.checkedRendezVous.add(`${rdv.id}_24h`);
+        }
+      });
+
+      // Notifier les rappels 2h avant
+      twoHourReminders.forEach(rdv => {
+        const shouldNotify = this.userRole === 'administrateur' || 
+                           this.userRole === 'directeur' ||
+                           (this.userRole === 'conseillere' && (rdv.conseillere === this.userName || rdv.assignee === this.userName));
+        
+        if (shouldNotify) {
+          const rdvDate = new Date(rdv.date || rdv.dateRendezVous);
+          const timeString = rdvDate.toLocaleTimeString('fr-FR', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          });
+          
+          this.notify({
+            type: 'rappel_rendez_vous',
+            message: `Rendez-vous dans 2 heures à ${timeString} avec ${rdv.nomClient || rdv.client || 'un client'}.`,
+            date: new Date().toISOString(),
+            nomClient: rdv.nomClient || rdv.client,
+            lienRedirection: '/rendez-vous'
+          });
+          
+          this.checkedRendezVous.add(`${rdv.id}_2h`);
+        }
+      });
+
+      // Notifier les rendez-vous manqués
+      missedAppointments.forEach(rdv => {
+        const shouldNotify = this.userRole === 'administrateur' || 
+                           this.userRole === 'directeur' ||
+                           (this.userRole === 'conseillere' && (rdv.conseillere === this.userName || rdv.assignee === this.userName));
+        
+        if (shouldNotify) {
+          const rdvDate = new Date(rdv.date || rdv.dateRendezVous);
+          const timeString = rdvDate.toLocaleTimeString('fr-FR', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          });
+          
+          this.notify({
+            type: 'rdv_manque',
+            message: `Rendez-vous manqué avec ${rdv.nomClient || rdv.client || 'un client'} à ${timeString}.`,
+            date: new Date().toISOString(),
+            nomClient: rdv.nomClient || rdv.client,
+            lienRedirection: '/rendez-vous'
+          });
+          
+          this.checkedRendezVous.add(`${rdv.id}_missed`);
+        }
+      });
+      
+      // Nettoyer les anciens rendez-vous vérifiés (plus vieux que 24h)
+      this.cleanOldCheckedItems(this.checkedRendezVous);
+      
+    } catch (error) {
+      console.error('Erreur lors de la vérification des rendez-vous:', error);
+    }
+  }
+
+  // Vérifier les mises à jour de factures
+  async checkFactureUpdates() {
+    try {
+      console.log('🔄 Début vérification des factures...');
+      const facturesResponse = await getAllFactures();
+      
+      console.log('📊 Réponse API factures:', {
+        success: facturesResponse.success,
+        nombreFactures: facturesResponse.factures?.length || 0
+      });
+      
+      if (!facturesResponse.success || !facturesResponse.factures) {
+        console.log('❌ Aucune donnée de factures disponible');
+        return;
+      }
+      
+      const factures = facturesResponse.factures;
+      const now = new Date();
+      
+      console.log(`📋 Analyse de ${factures.length} factures pour utilisateur ${this.userRole}: ${this.userName}`);
+      
+      // Log de quelques factures pour debug
+      factures.slice(0, 3).forEach(f => {
+        console.log(`📄 Facture ${f.id}: statut="${f.statut}", dateModif="${f.dateModification}"`);
+      });
+      
+      // Factures en retard
+      const overdueInvoices = factures.filter(facture => {
+        return this.isFactureEnRetard(facture) && !this.checkedFactures.has(`retard_${facture.id}`);
+      });
+
+      // Nouveaux paiements (reçus dans les dernières 24h)
+      const recentPayments = factures.filter(facture => {
+        const isRecent = this.isPaymentRecent(facture);
+        const notAlreadyChecked = !this.checkedFactures.has(`paiement_${facture.id}`);
+        
+        if (isRecent) {
+          console.log(`💰 Paiement récent détecté - Facture ${facture.id}:`, {
+            statut: facture.statut,
+            isRecent,
+            notAlreadyChecked,
+            datePaiement: facture.datePaiement || facture.dateModification
+          });
+        }
+        
+        return isRecent && notAlreadyChecked;
+      });
+
+      // Nouvelles factures créées (dernières 24h)
+      const newInvoices = factures.filter(facture => {
+        const factureDate = new Date(facture.dateCreation || facture.date_creation || facture.createdAt);
+        const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        const isNew = factureDate > twentyFourHoursAgo;
+        const notAlreadyChecked = !this.checkedFactures.has(`nouvelle_${facture.id}`);
+        
+        return isNew && notAlreadyChecked;
+      });
+
+      console.log(`📊 Résultats: ${overdueInvoices.length} en retard, ${recentPayments.length} paiements récents, ${newInvoices.length} nouvelles`);
+
+      // Notifier les factures en retard (admin/directeur seulement)
+      if (['administrateur', 'directeur'].includes(this.userRole)) {
+        overdueInvoices.forEach(facture => {
+          const joursRetard = this.calculateJoursRetard(facture);
+          
+          this.notify({
+            type: 'facture_retard',
+            message: `⚠️ Facture ${facture.numero || facture.id} en retard de ${joursRetard} jour${joursRetard > 1 ? 's' : ''} - ${facture.nomClient || facture.client || 'Client'}.`,
+            date: new Date().toISOString(),
+            nomClient: facture.nomClient || facture.client,
+            lienRedirection: '/facturation'
+          });
+          
+          this.checkedFactures.add(`retard_${facture.id}`);
+        });
+      }
+
+      // Notifier les nouveaux paiements (tous les utilisateurs autorisés)
+      if (['administrateur', 'directeur', 'conseillere'].includes(this.userRole)) {
+        console.log(`💰 ${recentPayments.length} nouveaux paiements détectés pour ${this.userRole}: ${this.userName}`);
+        
+        recentPayments.forEach(facture => {
+          // Filtrer par conseillère si nécessaire
+          const shouldNotify = this.userRole !== 'conseillere' || 
+                             facture.conseillere === this.userName ||
+                             facture.assignee === this.userName ||
+                             facture.validePar === this.userName ||
+                             (this.userId && facture.conseiller_id && parseInt(facture.conseiller_id) === parseInt(this.userId));
+          
+          console.log(`🔔 Notification paiement facture ${facture.id}: shouldNotify=${shouldNotify}, userRole=${this.userRole}, userName=${this.userName}`);
+          
+          if (shouldNotify) {
+            const montant = facture.montant || facture.total || facture.montantTotal;
+            
+            this.notify({
+              type: 'paiement_recu',
+              message: `💰 Paiement reçu : ${montant}€ de ${facture.nomClient || facture.client || 'Client'}.`,
+              date: new Date().toISOString(),
+              nomClient: facture.nomClient || facture.client,
+              lienRedirection: '/facturation'
+            });
+            
+            this.checkedFactures.add(`paiement_${facture.id}`);
+            console.log(`✅ Notification envoyée pour paiement facture ${facture.id}`);
+          } else {
+            console.log(`❌ Notification NOT envoyée pour facture ${facture.id} - filtering failed`);
+          }
+        });
+      } else {
+        console.log(`❌ Rôle ${this.userRole} non autorisé pour les notifications de paiement`);
+      }
+
+      // Notifier les nouvelles factures (admin/directeur)
+      if (['administrateur', 'directeur'].includes(this.userRole)) {
+        console.log(`📄 ${newInvoices.length} nouvelles factures détectées pour ${this.userRole}`);
+        
+        newInvoices.forEach(facture => {
+          const montant = facture.montant || facture.total || facture.montantTotal;
+          
+          this.notify({
+            type: 'nouvelle_facture',
+            message: `📄 Nouvelle facture créée : ${facture.numero || facture.id} (${montant}€) pour ${facture.nomClient || facture.client || 'Client'}.`,
+            date: new Date().toISOString(),
+            nomClient: facture.nomClient || facture.client,
+            lienRedirection: '/facturation'
+          });
+          
+          this.checkedFactures.add(`nouvelle_${facture.id}`);
+          console.log(`✅ Notification envoyée pour nouvelle facture ${facture.id}`);
+        });
+      }
+      
+      // Nettoyer les anciennes factures vérifiées
+      this.cleanOldCheckedItems(this.checkedFactures);
+      
+      console.log('✅ Vérification des factures terminée');
+      
+    } catch (error) {
+      console.error('❌ Erreur lors de la vérification des factures:', error);
+    }
+  }
+
+  // Vérifier si une facture est en retard
+  isFactureEnRetard(facture) {
+    if (facture.statut === 'payee' || facture.status === 'paid') return false;
+    
+    const dateEcheance = new Date(facture.dateEcheance || facture.dueDate);
+    const now = new Date();
+    
+    return dateEcheance < now;
+  }
+
+  // Calculer le nombre de jours de retard
+  calculateJoursRetard(facture) {
+    const dateEcheance = new Date(facture.dateEcheance || facture.dueDate);
+    const now = new Date();
+    const diffTime = now - dateEcheance;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+
+  // Vérifier si un paiement est récent (dernières 24h)
+  isPaymentRecent(facture) {
+    console.log(`🔍 Analyse paiement facture ${facture.id}:`, {
+      statut: facture.statut,
+      status: facture.status,
+      statutOriginal: facture.statut,
+      datePaiement: facture.datePaiement,
+      paymentDate: facture.paymentDate,
+      dateModification: facture.dateModification,
+      updatedAt: facture.updatedAt,
+      dateCreation: facture.dateCreation,
+      createdAt: facture.createdAt
+    });
+
+    // Vérifier différents formats de statut payé
+    const isPaid = facture.statut === 'payee' || 
+                   facture.statut === 'Payée' || 
+                   facture.statut === 'payée' ||
+                   facture.statut === 'paid' ||
+                   facture.status === 'paid' ||
+                   facture.status === 'payee' ||
+                   facture.status === 'Payée' ||
+                   facture.status === 'payée';
+
+    console.log(`💰 Facture ${facture.id} est payée: ${isPaid}`);
+
+    if (!isPaid) return false;
+    
+    // Utiliser plusieurs sources pour la date de paiement
+    let datePaiement = null;
+    
+    // Essayer différentes sources de date
+    if (facture.datePaiement) {
+      datePaiement = new Date(facture.datePaiement);
+    } else if (facture.paymentDate) {
+      datePaiement = new Date(facture.paymentDate);
+    } else if (facture.dateModification) {
+      datePaiement = new Date(facture.dateModification);
+    } else if (facture.updatedAt) {
+      datePaiement = new Date(facture.updatedAt);
+    } else {
+      // Si pas de date spécifique, considérer comme récent si c'est payé
+      console.log(`⚠️ Pas de date de paiement pour facture ${facture.id}, considéré comme récent`);
+      return true;
+    }
+    
+    const now = new Date();
+    const diffHours = (now - datePaiement) / (1000 * 60 * 60);
+    
+    console.log(`⏰ Facture ${facture.id}: diff = ${diffHours.toFixed(2)} heures`);
+    
+    // Paiement dans les dernières 24h
+    const isRecent = diffHours <= 24 && diffHours >= 0;
+    console.log(`✅ Paiement récent pour facture ${facture.id}: ${isRecent}`);
+    
+    return isRecent;
+  }
+
+  // Vérifier si on doit envoyer le résumé quotidien
+  shouldSendDailySummary() {
+    const lastSummary = localStorage.getItem('lastDailySummary');
+    const today = new Date().toDateString();
+    
+    if (!lastSummary || lastSummary !== today) {
+      localStorage.setItem('lastDailySummary', today);
+      return true;
+    }
+    
+    return false;
+  }
+
+  // Nettoyer les anciens éléments vérifiés
+  cleanOldCheckedItems(checkedSet) {
+    // Cette fonction pourrait être améliorée pour nettoyer basé sur l'âge
+    // Pour l'instant, on garde une taille maximum
+    if (checkedSet.size > 1000) {
+      const array = Array.from(checkedSet);
+      checkedSet.clear();
+    }
+  }
+
+  // Initialiser le service de notifications avec les informations utilisateur
+  async initializeWithUserInfo() {
+    try {
+      // Récupérer les informations de l'utilisateur connecté
+      const userInfo = this.getCurrentUserInfo();
+      
+      if (userInfo) {
+        this.userRole = userInfo.role || userInfo.type || 'conseillere';
+        this.userName = userInfo.nom || userInfo.username || userInfo.name;
+        this.userId = userInfo.id;
+        
+        console.log(`Service de notifications initialisé pour ${this.userName} (${this.userRole})`);
+        
+        // Démarrer la vérification automatique
+        this.startChecking();
+      } else {
+        console.warn('Informations utilisateur non disponibles pour les notifications');
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'initialisation du service de notifications:', error);
+    }
+  }
+
+  // Obtenir les informations de l'utilisateur connecté
+  getCurrentUserInfo() {
+    try {
+      // Essayer plusieurs sources possibles pour les informations utilisateur
+      
+      // 1. localStorage
+      const savedUser = localStorage.getItem('user') || localStorage.getItem('currentUser');
+      if (savedUser) {
+        return JSON.parse(savedUser);
+      }
+      
+      // 2. sessionStorage
+      const sessionUser = sessionStorage.getItem('user') || sessionStorage.getItem('currentUser');
+      if (sessionUser) {
+        return JSON.parse(sessionUser);
+      }
+      
+      // 3. Contexte global (si disponible)
+      if (window.currentUser) {
+        return window.currentUser;
+      }
+      
+      // 4. Token JWT décodé (si disponible)
+      const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          return {
+            id: payload.id || payload.userId,
+            nom: payload.nom || payload.name || payload.username,
+            role: payload.role || payload.type
+          };
+        } catch (e) {
+          console.log('Impossible de décoder le token JWT');
+        }
+      }
+      
+      console.warn('Aucune information utilisateur trouvée');
+      return null;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des informations utilisateur:', error);
+      return null;
+    }
+  }
+
+  // Démarrer les vérifications automatiques
+  startChecking() {
+    // Arrêter toute vérification existante
+    this.stopChecking();
+    
+    // Vérification immédiate
+    this.checkAll();
+    
+    // Vérifications périodiques (toutes les 30 secondes en production)
+    this.checkInterval = setInterval(() => {
+      this.checkAll();
+    }, 30 * 1000);
+  }
+
+  // Arrêter les vérifications automatiques
+  stopChecking() {
+    if (this.checkInterval) {
+      clearInterval(this.checkInterval);
+      this.checkInterval = null;
+    }
+  }
+
+  // Vérifier toutes les sources de notifications
+  async checkAll() {
+    if (!this.userRole || !this.userName) {
+      console.log('Service de notifications pas encore initialisé');
+      return;
+    }
+
+    this.lastNotificationCheck = new Date();
+    
+    try {
+      await Promise.all([
+        this.checkNewLeads(),
+        this.checkUpcomingRendezVous(),
+        this.checkFactureUpdates()
+      ]);
+      
+      // Sauvegarder l'état après chaque vérification
+      this.saveState();
+    } catch (error) {
+      console.error('Erreur lors de la vérification des notifications:', error);
+    }
+  }
+
+  // Forcer une vérification immédiate (pour les actions utilisateur)
+  async forceCheck() {
+    console.log('🔄 Vérification forcée des notifications...');
+    await this.checkAll();
+  }
+
+  // Réinitialiser les vérifications pour un type spécifique
+  resetChecked(type = 'all') {
+    if (type === 'all' || type === 'factures') {
+      this.checkedFactures.clear();
+      console.log('♻️ Cache des factures réinitialisé');
+    }
+    if (type === 'all' || type === 'rendezVous') {
+      this.checkedRendezVous.clear();
+      console.log('♻️ Cache des rendez-vous réinitialisé');
+    }
+    if (type === 'all') {
+      this.lastLeadCount = 0;
+      console.log('♻️ Cache des leads réinitialisé');
+    }
+    
+    // Sauvegarder l'état après la réinitialisation
+    this.saveState();
+  }
+
+  // Générer des notifications de test (pour le développement)
+  generateTestNotifications() {
+    const testNotifications = [
+      {
+        type: 'nouveau_lead',
+        message: 'Vous avez reçu 3 nouveaux leads aujourd\'hui.',
+        date: new Date().toISOString(),
+        lienRedirection: '/leads'
+      },
+      {
+        type: 'rappel_rendez_vous',
+        message: 'Rendez-vous prévu avec Marie Dubois à 14:30 aujourd\'hui.',
+        date: new Date().toISOString(),
+        nomClient: 'Marie Dubois',
+        lienRedirection: '/clients'
+      },
+      {
+        type: 'paiement_recu',
+        message: 'Paiement reçu de 4000$ de Jean Martin.',
+        date: new Date().toISOString(),
+        nomClient: 'Jean Martin',
+        lienRedirection: '/clients'
+      },
+      {
+        type: 'facture_retard',
+        message: 'Attention : facture F2025-075 en attente depuis 7 jours.',
+        date: new Date().toISOString(),
+        lienRedirection: '/clients'
+      }
+    ];
+
+    testNotifications.forEach((notification, index) => {
+      setTimeout(() => {
+        this.notify(notification);
+      }, index * 2000); // Espacer les notifications de test de 2 secondes
+    });
+  }
+
+  // Fonction de test pour forcer une notification de paiement
+  testPaymentNotification(factureId = 'TEST_001', montant = '1000', clientNom = 'Client Test') {
+    console.log('🧪 Test notification paiement forcée');
+    this.notify({
+      type: 'paiement_recu',
+      message: `💰 TEST - Paiement reçu : ${montant}€ de ${clientNom}.`,
+      date: new Date().toISOString(),
+      nomClient: clientNom,
+      lienRedirection: '/facturation'
+    });
+  }
+
+  // Fonction de test pour forcer une notification de lead assigné
+  testLeadAssignmentNotification(leadId = 'TEST_001', leadNom = 'Test Lead', conseillerNom = null) {
+    const targetConseiller = conseillerNom || this.userName || 'Conseiller Test';
+    console.log('🧪 Test notification lead assigné forcée');
+    this.notify({
+      type: 'nouveau_lead',
+      message: `Un nouveau lead vous a été assigné : ${leadNom}.`,
+      date: new Date().toISOString(),
+      nomClient: leadNom,
+      lienRedirection: '/leads'
+    });
+  }
+
+  // Fonction pour diagnostiquer l'assignation de leads
+  async diagnoseLeadAssignments() {
+    try {
+      console.log('🔍 === DIAGNOSTIC ASSIGNATION LEADS ===');
+      
+      const response = await fetch('http://localhost:5000/api/leads', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        console.log('❌ Impossible de récupérer les leads');
+        return;
+      }
+
+      const data = await response.json();
+      const leads = data.data || data;
+      const userName = localStorage.getItem('userName');
+      const userId = localStorage.getItem('userId');
+      
+      console.log('👤 Utilisateur actuel:', userName, '(ID:', userId, ')');
+      console.log('📋 Total leads récupérés:', leads.length);
+
+      if (!Array.isArray(leads)) {
+        console.log('❌ Format de leads invalide');
+        return;
+      }
+
+      // Analyser les leads assignés à l'utilisateur actuel
+      const userLeads = leads.filter(lead => {
+        const byId = userId && lead.conseiller_id && parseInt(lead.conseiller_id) === parseInt(userId);
+        const byName = lead.conseillere === userName || lead.conseillere?.toLowerCase() === userName?.toLowerCase();
+        return byId || byName;
+      });
+
+      console.log('🎯 Leads assignés à l\'utilisateur actuel:', userLeads.length);
+      
+      if (userLeads.length > 0) {
+        console.log('📊 Détail des leads assignés:');
+        userLeads.forEach((lead, index) => {
+          console.log(`  ${index + 1}. Lead ${lead.id}: ${lead.prenom} ${lead.nom}`);
+          console.log(`     conseiller_id: ${lead.conseiller_id || 'NULL'}`);
+          console.log(`     conseillere: "${lead.conseillere || 'NULL'}"');
+          console.log(`     date_creation: ${lead.date_creation || lead.createdAt}`);
+          console.log(`     date_mise_a_jour: ${lead.date_mise_a_jour || lead.updatedAt}`);
+        });
+      }
+
+      // Analyser les leads récemment mis à jour (potentiellement assignés)
+      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+      const recentUpdates = leads.filter(lead => {
+        const updateDate = new Date(lead.date_mise_a_jour || lead.updatedAt);
+        return updateDate > oneHourAgo;
+      });
+
+      console.log('🕐 Leads mis à jour dans la dernière heure:', recentUpdates.length);
+      
+      if (recentUpdates.length > 0) {
+        console.log('📈 Détail des leads récemment mis à jour:');
+        recentUpdates.forEach((lead, index) => {
+          const isAssignedToUser = 
+            (userId && lead.conseiller_id && parseInt(lead.conseiller_id) === parseInt(userId)) ||
+            lead.conseillere === userName ||
+            lead.conseillere?.toLowerCase() === userName?.toLowerCase();
+            
+          console.log(`  ${index + 1}. Lead ${lead.id}: ${lead.prenom} ${lead.nom}`);
+          console.log(`     Assigné à l'utilisateur actuel: ${isAssignedToUser ? '✅ OUI' : '❌ NON'}`);
+          console.log(`     conseiller_id: ${lead.conseiller_id || 'NULL'}`);
+          console.log(`     conseillere: "${lead.conseillere || 'NULL'}"`);
+          console.log(`     date_mise_a_jour: ${lead.date_mise_a_jour || lead.updatedAt}`);
+        });
+      }
+
+      // Vérifier le cache des notifications
+      console.log('💾 Cache notifications:');
+      console.log('  Leads notifiés:', Array.from(this.cache.keys()).filter(k => k.startsWith('lead_assigned_')));
+      
+      console.log('✅ Diagnostic terminé');
+      
+    } catch (error) {
+      console.error('❌ Erreur lors du diagnostic des leads:', error);
+    }
+  }
+
+  // Nettoyer les toasts déjà affichés (utilitaire de debug)
+  clearShownToasts() {
+    try {
+      localStorage.removeItem('shownToastNotifications');
+      console.log('🧹 Cache des toasts affichés nettoyé');
+    } catch (error) {
+      console.error('Erreur lors du nettoyage des toasts:', error);
+    }
+  }
+
+  // Diagnostic complet des notifications et toasts
+  diagnoseNotificationDisplay() {
+    try {
+      console.log('🔍 DIAGNOSTIC D\'AFFICHAGE DES NOTIFICATIONS');
+      console.log('==============================================');
+      
+      // 1. Notifications en localStorage
+      const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+      console.log(`1. Notifications en localStorage: ${notifications.length}`);
+      
+      // 2. Toasts déjà affichés
+      const shownToasts = JSON.parse(localStorage.getItem('shownToastNotifications') || '[]');
+      console.log(`2. Toasts déjà affichés: ${shownToasts.length}`);
+      
+      // 3. Notifications récentes (5 minutes)
+      const now = new Date();
+      const recentNotifications = notifications.filter(n => {
+        const diffMinutes = (now.getTime() - new Date(n.date).getTime()) / (1000 * 60);
+        return diffMinutes <= 5;
+      });
+      console.log(`3. Notifications récentes (5 min): ${recentNotifications.length}`);
+      
+      // 4. Nouvelles notifications pour toast
+      const newForToast = recentNotifications.filter(n => 
+        !n.isRead && !shownToasts.includes(n.id)
+      );
+      console.log(`4. Nouvelles pour toast: ${newForToast.length}`);
+      
+      // Détail des notifications récentes
+      console.log('5. Détail des notifications récentes:');
+      recentNotifications.forEach(n => {
+        const diffMinutes = (now.getTime() - new Date(n.date).getTime()) / (1000 * 60);
+        console.log(`   - ${n.id}: ${n.message.substring(0, 50)}... (${diffMinutes.toFixed(1)} min, lue: ${n.isRead}, toast affiché: ${shownToasts.includes(n.id)})`);
+      });
+      
+    } catch (error) {
+      console.error('❌ Erreur diagnostic affichage:', error);
+    }
+  }
+}
+
+// Instance unique du service
+const notificationService = new NotificationService();
+
+// Exposer le service globalement pour le debugging en production
+if (typeof window !== 'undefined') {
+  window.notificationService = notificationService;
+  console.log('🔧 notificationService disponible globalement pour debug');
+}
+
+export default notificationService;

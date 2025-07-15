@@ -1,0 +1,681 @@
+.tableau-bord-container {
+  padding: var(--spacing-lg); /* Augmenter le padding global */
+  background-color: #f4f7f9; /* Fond légèrement gris pour le conteneur */
+}
+
+.header-container { /* Style pour le conteneur de l'en-tête défini dans le JS */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-medium, #dde2e7); /* Bordure inférieure pour séparer */
+}
+
+.header-container h1 { /* Style pour le titre H1 dans le header-container */
+  margin: 0;
+  color: var(--color-primary-dark, #1a2b4d); /* Couleur plus foncée pour le titre principal */
+  font-size: var(--font-size-xl, 24px); /* Taille de police plus grande */
+  font-weight: var(--font-weight-bold, 700);
+}
+
+/* Conteneur pour le titre et le badge Vue Globale */
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 12px);
+}
+
+/* Badge Vue Globale */
+.vue-globale-badge {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+  cursor: help;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.vue-globale-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+.tableau-bord-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.tableau-bord-header h2 {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.periode-selector {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.btn-periode {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-neutral-light);
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-periode:hover {
+  background-color: var(--color-neutral-medium);
+}
+
+.btn-periode.active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ajout d'une ombre subtile au bouton actif */
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Augmenter minmax pour les stats-sections */
+  gap: var(--spacing-lg); /* Augmenter l'espacement entre les cartes de section */
+  margin-bottom: var(--spacing-lg);
+}
+
+.stats-section,
+.chart-section, /* Ajout de .chart-section ici pour le style de carte commun */
+.rendez-vous-section, /* Assurer que ces sections partagent le style de carte */
+.activites-section,
+.taches-section,
+.factures-section,
+.paiements-section,
+.charges-section,
+.leads-section {
+  background-color: white;
+  border-radius: var(--border-radius-lg, 12px); /* Coins plus arrondis */
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0,0,0,0.08)); /* Ombre plus prononcée et douce */
+  padding: var(--spacing-lg); /* Augmenter le padding interne */
+  border: 1px solid var(--color-neutral-light, #e9edf0); /* Bordure légère */
+  /* margin-bottom est géré par le gap du grid parent ou margin-bottom du grid lui-même */
+}
+
+.stats-section h3,
+.chart-section h3, /* Appliquer aux titres de chart-section aussi */
+.rendez-vous-section h3,
+.activites-section h3,
+.taches-section h3,
+.factures-section h3,
+.paiements-section h3,
+.charges-section h3,
+.leads-section h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg); /* Plus d'espace sous le titre de section */
+  color: var(--color-primary-dark, #1a2b4d); /* Couleur de titre plus foncée */
+  font-size: var(--font-size-lg, 18px); /* Taille de police pour les titres de section */
+  font-weight: var(--font-weight-semibold, 600);
+  border-bottom: 1px solid var(--color-neutral-lighter, #f0f2f5); /* Ligne de séparation subtile sous le titre */
+  padding-bottom: var(--spacing-sm);
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column; /* Changer pour empiler icône/info et ensuite les détails */
+  align-items: stretch; /* Étirer les éléments enfants */
+  padding: var(--spacing-md);
+  background-color: #ffffff; /* Fond blanc pour les stat-cards */
+  border-radius: var(--border-radius-md, 8px); /* Coins arrondis pour les stat-cards */
+  border: 1px solid var(--color-neutral-lighter, #f0f2f5); /* Bordure très légère */
+  box-shadow: var(--shadow-xs, 0 2px 4px rgba(0,0,0,0.04)); /* Ombre très subtile */
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.stat-card.clickable:hover {
+  transform: translateY(-4px); /* Effet de soulèvement plus marqué */
+  box-shadow: var(--shadow-lg, 0 6px 16px rgba(0,0,0,0.1)); /* Ombre plus visible au survol */
+}
+
+.stat-card-header { /* Nouveau conteneur pour icône et titre */
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-icon {
+  width: 36px; /* Ajuster la taille de l'icône */
+  height: 36px;
+  border-radius: var(--border-radius-md); /* Coins arrondis pour le fond de l'icône */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-sm); /* Espace entre icône et titre de la carte */
+  font-size: var(--font-size-md); /* Ajuster la taille de la police de l'icône si c'est un caractère */
+}
+
+.leads-icon {
+  background-color: rgba(26, 115, 232, 0.1);
+  color: #1a73e8;
+}
+
+.clients-icon {
+  background-color: rgba(52, 168, 83, 0.1);
+  color: #34a853;
+}
+
+.conversion-icon {
+  background-color: rgba(234, 67, 53, 0.1);
+  color: #ea4335;
+}
+
+.dossiers-icon {
+  background-color: rgba(251, 188, 5, 0.1);
+  color: #fbbc05;
+}
+
+.dossiers-complete-icon {
+  background-color: rgba(27, 94, 32, 0.1);
+  color: #1b5e20;
+}
+
+.factures-icon {
+  background-color: rgba(242, 153, 0, 0.1);
+  color: #f29900;
+}
+
+.revenus-icon {
+  background-color: rgba(21, 101, 192, 0.1);
+  color: #1565c0;
+}
+
+.charges-icon {
+  background-color: rgba(198, 40, 40, 0.1);
+  color: #c62828;
+}
+
+.rdv-icon {
+  background-color: rgba(123, 31, 162, 0.1);
+  color: #7b1fa2;
+}
+
+.consultation-icon {
+  background-color: rgba(0, 121, 107, 0.1);
+  color: #00796b;
+}
+
+.ventes-icon {
+  background-color: rgba(255, 111, 0, 0.1);
+  color: #ff6f00;
+}
+
+.stat-info {
+  flex: 1;
+  display: flex; /* Utiliser flex pour aligner titre et valeur/évolution */
+  flex-direction: column; /* Empiler les éléments d'info */
+  text-align: left; /* Aligner le texte à gauche pour le titre de la carte */
+}
+
+.stat-info h4 { /* Titre de la stat-card */
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.stat-value {
+  margin: 0 0 var(--spacing-xs) 0; /* Ajuster les marges */
+  font-size: var(--font-size-xl, 22px); /* Taille de police pour la valeur principale */
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary-dark, #1a2b4d);
+  text-align: left; /* Aligner la valeur à gauche */
+  line-height: 1.2;
+}
+
+.stat-subvalue {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  text-align: left; /* Aligner la sous-valeur à gauche */
+}
+
+.stat-evolution {
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-align: left; /* Aligner l'évolution à gauche */
+  margin-top: auto; /* Pousser l'évolution vers le bas si la carte a une hauteur variable */
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Augmenter minmax */
+  gap: var(--spacing-lg); /* Augmenter l'espacement */
+  margin-bottom: var(--spacing-lg);
+}
+
+.chart-section {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
+}
+
+.chart-section h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 220px; /* Augmenter la hauteur du graphique */
+  padding-top: 20px; /* Espace pour les valeurs au-dessus des barres */
+}
+
+.bar-container { /* Ajout d'un conteneur pour chaque barre et son étiquette */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 5px; /* Ajoute un espacement horizontal entre les barres/étiquettes */
+}
+
+.bar {
+  width: 90%; /* Rendre les barres plus larges, ajuster selon le nombre de barres */
+  max-width: 50px; /* Limiter la largeur maximale des barres */
+  background-color: var(--color-primary-light, #64b5f6); /* Couleur plus claire pour les barres */
+  border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+  position: relative;
+  transition: height var(--transition-normal), background-color 0.3s; /* Ajouter transition pour background */
+}
+
+.bar-value { /* Style pour la valeur au-dessus de la barre */
+  position: absolute;
+  top: -20px; /* Positionner au-dessus de la barre */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--font-size-xs);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.bar-label { /* Style pour l'étiquette sous la barre */
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  word-wrap: break-word; /* Permettre le retour à la ligne pour les longues étiquettes */
+  max-width: 60px; /* Définir une largeur maximale pour l'étiquette pour forcer le retour à la ligne si nécessaire */
+  line-height: 1.2; /* Améliorer la lisibilité pour les étiquettes sur plusieurs lignes */
+}
+
+.bar:hover {
+  background-color: var(--color-primary, #1a73e8); /* Foncer la barre au survol */
+}
+
+.bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Ajuster minmax */
+  gap: var(--spacing-lg); /* Augmenter l'espacement */
+}
+
+.activites-section,
+.taches-section,
+.rendez-vous-section,
+.factures-section,
+.paiements-section,
+.charges-section,
+.leads-section {
+  background-color: white;
+  border-radius: var(--border-radius-lg, 12px); /* Coins plus arrondis */
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0,0,0,0.08)); /* Ombre plus prononcée et douce */
+  padding: var(--spacing-lg); /* Augmenter le padding interne */
+  border: 1px solid var(--color-neutral-light, #e9edf0); /* Bordure légère */
+  /* margin-bottom est géré par le gap du grid parent ou margin-bottom du grid lui-même */
+}
+
+.activites-section h3,
+.taches-section h3,
+.rendez-vous-section h3,
+.factures-section h3,
+.paiements-section h3,
+.charges-section h3,
+.leads-section h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg); /* Plus d'espace sous le titre de section */
+  color: var(--color-primary-dark, #1a2b4d); /* Couleur de titre plus foncée */
+  font-size: var(--font-size-lg, 18px); /* Taille de police pour les titres de section */
+  font-weight: var(--font-weight-semibold, 600);
+  border-bottom: 1px solid var(--color-neutral-lighter, #f0f2f5); /* Ligne de séparation subtile sous le titre */
+  padding-bottom: var(--spacing-sm);
+}
+
+.activites-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.activite-item {
+  display: flex;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-neutral-light);
+}
+
+.activite-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-sm);
+  font-size: var(--font-size-md);
+}
+
+.activite-content {
+  flex: 1;
+}
+
+.activite-description {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.activite-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.taches-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.tache-item {
+  display: flex;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-neutral-light);
+}
+
+.tache-priorite {
+  width: 4px;
+  border-radius: var(--border-radius-sm);
+  margin-right: var(--spacing-sm);
+}
+
+.priorite-haute {
+  background-color: var(--color-error);
+}
+
+.priorite-moyenne {
+  background-color: var(--color-warning);
+}
+
+.priorite-basse {
+  background-color: var(--color-info);
+}
+
+.tache-content {
+  flex: 1;
+}
+
+.tache-description {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.tache-date {
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  text-align: left;
+  padding: var(--spacing-md); /* Augmenter le padding */
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold, 600); /* Titres de colonnes plus gras */
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--color-neutral-medium, #dde2e7); /* Bordure plus marquée pour l'en-tête */
+  background-color: var(--color-neutral-lighter, #f8f9fa); /* Fond léger pour l'en-tête */
+}
+
+.data-table td {
+  padding: var(--spacing-md); /* Augmenter le padding */
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid var(--color-neutral-light, #e9edf0);
+  color: var(--text-primary);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background-color: var(--color-neutral-lightest, #fcfdff); /* Effet de survol léger sur les lignes */
+}
+
+.statut-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.statut-success {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+}
+
+.statut-warning {
+  background-color: rgba(239, 108, 0, 0.1);
+  color: var(--color-warning);
+}
+
+.statut-error {
+  background-color: rgba(198, 40, 40, 0.1);
+  color: var(--color-error);
+}
+
+.statut-info {
+  background-color: rgba(2, 136, 209, 0.1);
+  color: var(--color-info);
+}
+
+/* Ajout d'un style moderne pour les boutons de filtre de période */
+.filter-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.filter-buttons button {
+  padding: 8px 18px; /* Maintenir un bon padding */
+  border: 1px solid transparent; /* Ajouter une bordure transparente pour la stabilité au survol/focus */
+  border-radius: var(--border-radius-lg, 22px); /* Utiliser le même radius que les cartes */
+  background: #e9edf0; /* Fond neutre pour les boutons non actifs */
+  color: var(--text-secondary, #5f6368);
+  font-weight: 500;
+  font-size: 14px; /* Ajuster la taille de police */
+  box-shadow: none; /* Pas d'ombre par défaut */
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border-color 0.2s;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter-buttons button.active,
+.filter-buttons button:focus { /* Style de focus similaire à l'actif */
+  background: linear-gradient(95deg, var(--color-primary, #1a73e8) 0%, var(--color-primary-light, #4fc3f7) 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(26,115,232,0.15); /* Ombre plus douce */
+  border-color: transparent;
+}
+
+.filter-buttons button:hover:not(.active) {
+  background: #dfe6ec; /* Assombrir légèrement au survol */
+  color: var(--color-primary-dark, #1a2b4d);
+  border-color: var(--color-neutral-medium, #dde2e7); /* Bordure subtile au survol */
+}
+
+.rendez-vous-list,
+.activites-list,
+.taches-list,
+.factures-list,
+.paiements-list,
+.charges-list,
+.leads-list {
+  max-height: 300px; /* You can adjust this value as needed */
+  overflow-y: auto;
+  padding-right: 10px; /* Add some padding to prevent content from hiding behind the scrollbar */
+}
+
+/* Specific styling for lists if needed, for example: */
+.rendez-vous-list ul,
+.activites-list ul,
+.taches-list ul,
+.factures-list ul,
+.paiements-list ul,
+.charges-list ul,
+.leads-list ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.rendez-vous-list li,
+.activites-list li,
+.taches-list li,
+.factures-list li,
+.paiements-list li,
+.charges-list li,
+.leads-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.rendez-vous-list li:last-child,
+.activites-list li:last-child,
+.taches-list li:last-child,
+.factures-list li:last-child,
+.paiements-list li:last-child,
+.charges-list li:last-child,
+.leads-list li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .stats-grid,
+  .charts-grid,
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    padding: var(--spacing-sm);
+  }
+  
+  .stat-icon {
+    width: 30px;
+    height: 30px;
+    font-size: var(--font-size-md);
+  }
+  
+  .stat-value {
+    font-size: var(--font-size-md);
+  }
+  
+  .bar-chart {
+    height: 150px;
+  }
+  
+  .bar {
+    width: 30px;
+  }
+}
+
+.stats-section .stat-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Styles pour les en-têtes de section avec indicateurs de chargement */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.section-header h3 {
+  margin: 0 !important; /* Annuler les marges par défaut */
+  border: none !important; /* Annuler les bordures par défaut */
+  padding: 0 !important; /* Annuler le padding par défaut */
+  color: var(--color-primary-dark, #1a2b4d);
+  font-size: var(--font-size-lg, 18px);
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.loading-indicator {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Animation pour l'indicateur de chargement */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Style pour les sections sans données */
+.no-data {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.no-data p {
+  margin: var(--spacing-sm) 0;
+  font-size: var(--font-size-sm);
+}

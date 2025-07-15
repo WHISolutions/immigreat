@@ -1,0 +1,217 @@
+.visa-visitor-section {
+  background-color: var(--color-neutral-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.member-documents {
+  margin-top: var(--spacing-md);
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
+}
+
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-neutral-light);
+}
+
+.member-role {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.document-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: var(--spacing-sm) 0;
+}
+
+.document-category {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.document-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--color-neutral-light);
+}
+
+.document-item:last-child {
+  border-bottom: none;
+}
+
+.document-name {
+  display: flex;
+  align-items: center;
+}
+
+.document-status {
+  font-size: var(--font-size-xs);
+  padding: 2px 8px;
+  border-radius: var(--border-radius-full);
+}
+
+.status-fourni {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+}
+
+.status-a-fournir {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: #ff9800;
+}
+
+.document-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.employment-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.employment-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employment-option input[type="checkbox"] {
+  margin: 0;
+}
+
+.employment-other-input {
+  margin-top: var(--spacing-xs);
+  width: 100%;
+}
+
+.conditional-field {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.document-upload-section {
+  background-color: var(--color-neutral-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.upload-target-selector {
+  margin-bottom: var(--spacing-md);
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.upload-row {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.upload-field {
+  flex: 1;
+}
+
+.upload-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.upload-field select,
+.upload-field input,
+.upload-field textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+}
+
+.upload-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-md);
+}
+
+.child-documents {
+  margin-left: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  border-left: 2px solid var(--color-neutral-medium);
+}
+
+.child-indicator {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-left: var(--spacing-xs);
+}
+
+.info-tooltip {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 5px;
+  color: var(--color-primary);
+  cursor: help;
+  position: relative;
+}
+
+.info-tooltip i {
+  font-size: 14px;
+}
+
+.info-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: white;
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  white-space: normal;
+  width: 250px;
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+  .upload-row {
+    flex-direction: column;
+  }
+  
+  .employment-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-tooltip:hover::after {
+    width: 200px;
+    left: 0;
+    transform: none;
+  }
+}

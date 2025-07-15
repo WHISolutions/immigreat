@@ -1,0 +1,801 @@
+/* Variables CSS globales */
+:root {
+  --admin-primary: #2563eb;
+  --admin-primary-hover: #1d4ed8;
+  --admin-secondary: #64748b;
+  --admin-success: #10b981;
+  --admin-warning: #f59e0b;
+  --admin-danger: #ef4444;
+  --admin-white: #ffffff;
+  --admin-gray-50: #f8fafc;
+  --admin-gray-100: #f1f5f9;
+  --admin-gray-200: #e2e8f0;
+  --admin-gray-300: #cbd5e1;
+  --admin-gray-500: #64748b;
+  --admin-gray-700: #334155;
+  --admin-gray-900: #0f172a;
+  --admin-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --admin-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --admin-border-radius: 8px;
+  --admin-transition: all 0.2s ease-in-out;
+}
+
+.administration-container {
+  padding: 2rem;
+  background-color: var(--admin-gray-50);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.administration-container h2 {
+  color: var(--admin-gray-900);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.administration-container h2::before {
+  content: "⚙️";
+  font-size: 1.5rem;
+}
+
+/* Navigation des onglets modernisée */
+.admin-tabs {
+  display: flex;
+  background: var(--admin-white);
+  border-radius: var(--admin-border-radius);
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border: 1px solid var(--admin-gray-200);
+}
+
+.admin-tabs button {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--admin-gray-700);
+  transition: var(--admin-transition);
+  border-bottom: 3px solid transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.admin-tabs button:hover {
+  background-color: var(--admin-gray-50);
+  color: var(--admin-primary);
+}
+
+.admin-tabs button.active {
+  color: var(--admin-primary);
+  background-color: var(--admin-gray-50);
+  border-bottom-color: var(--admin-primary);
+}
+
+.admin-tabs button:not(:last-child) {
+  border-right: 1px solid var(--admin-gray-200);
+}
+
+/* Contenu des onglets */
+.tab-content-wrapper {
+  background: var(--admin-white);
+  border-radius: var(--admin-border-radius);
+  box-shadow: var(--admin-shadow);
+  padding: 2rem;
+  border: 1px solid var(--admin-gray-200);
+}
+
+.tab-content {
+  padding: var(--spacing-lg);
+}
+
+.tab-actions {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-primary:hover {
+  background-color: #0f3a6d;
+}
+
+.btn-primary span {
+  margin-right: var(--spacing-xs);
+  font-size: 18px;
+}
+
+.btn-secondary {
+  background-color: var(--color-light-gray);
+  color: var(--color-dark-gray);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.filtres-container {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  background-color: #f9f9f9;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  flex-wrap: wrap;
+}
+
+.filtre-group {
+  display: flex;
+  align-items: center;
+}
+
+.filtre-group label {
+  margin-right: var(--spacing-xs);
+  color: var(--color-dark-gray);
+  font-weight: var(--font-weight-medium);
+}
+
+.filtre-group select,
+.filtre-group input {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-white);
+}
+
+.search-group {
+  flex-grow: 1;
+}
+
+.search-group input {
+  width: 100%;
+}
+
+.utilisateurs-table-container,
+.journal-table-container,
+.sauvegardes-table-container {
+  overflow-x: auto;
+}
+
+.utilisateurs-table,
+.journal-table,
+.sauvegardes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.utilisateurs-table th,
+.journal-table th,
+.sauvegardes-table th {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-align: left;
+  padding: var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.utilisateurs-table td,
+.journal-table td,
+.sauvegardes-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.utilisateurs-table tr:hover,
+.journal-table tr:hover,
+.sauvegardes-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.statut-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+}
+
+.statut-actif {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.statut-inactif {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-action {
+  background-color: var(--color-light-gray);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: var(--color-white);
+  min-width: 200px;
+  box-shadow: var(--shadow-md);
+  z-index: 1;
+  border-radius: var(--border-radius-sm);
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #f5f5f5;
+}
+
+.actions-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  width: 600px;
+  max-width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--color-primary);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-dark-gray);
+}
+
+.modal-content form {
+  padding: var(--spacing-lg);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group.full-width {
+  flex: 0 0 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-dark-gray);
+  font-weight: var(--font-weight-medium);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-sm);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+/* Paramètres styles */
+.parametres-section {
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.parametres-section h3 {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+.parametres-section:last-child {
+  border-bottom: none;
+}
+
+.color-input-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.color-input-container input[type="color"] {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--color-light-gray);
+}
+
+.color-input-container input[type="text"] {
+  flex: 1;
+}
+
+/* Sauvegarde styles */
+.sauvegarde-info {
+  background-color: #e3f2fd;
+  border-left: 4px solid var(--color-primary);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--border-radius-sm);
+}
+
+.sauvegarde-info p {
+  margin: var(--spacing-xs) 0;
+  color: var(--color-dark-gray);
+}
+
+/* Formulaire d'ajout d'utilisateur modernisé */
+.add-user-form {
+  background: linear-gradient(135deg, var(--admin-gray-50) 0%, var(--admin-white) 100%);
+  border: 2px solid var(--admin-gray-200);
+  border-radius: var(--admin-border-radius);
+  padding: 2rem;
+  margin-top: 2rem;
+  box-shadow: var(--admin-shadow);
+}
+
+.add-user-form h4 {
+  color: var(--admin-gray-900);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-user-form h4::before {
+  content: "➕";
+  font-size: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.form-input,
+.form-select {
+  padding: 0.75rem;
+  border: 2px solid var(--admin-gray-200);
+  border-radius: var(--admin-border-radius);
+  font-size: 0.875rem;
+  transition: var(--admin-transition);
+  background: var(--admin-white);
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+}
+
+.form-input::placeholder {
+  color: var(--admin-gray-500);
+}
+
+.btn-add-user {
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-hover) 100%);
+  color: var(--admin-white);
+  border: none;
+  border-radius: var(--admin-border-radius);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--admin-transition);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  box-shadow: var(--admin-shadow);
+}
+
+.btn-add-user:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.btn-add-user:disabled {
+  background: var(--admin-gray-300);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Alignement spécifique pour les éléments du formulaire */
+.form-row .form-select,
+.form-row .btn-add-user {
+  align-self: start;
+  margin-top: 0;
+}
+
+.form-row .password-field-container {
+  align-self: start;
+}
+
+/* Ajustement pour que tous les inputs de base soient alignés */
+.form-row .form-input:not(.password-field-container .form-input) {
+  align-self: start;
+}
+
+/* Loading state amélioré */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  color: var(--admin-gray-500);
+}
+
+.loading-container::before {
+  content: "⏳";
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Responsive design amélioré */
+@media (max-width: 1200px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .administration-container {
+    padding: 1rem;
+  }
+  
+  .admin-tabs {
+    flex-direction: column;
+  }
+  
+  .admin-tabs button {
+    border-bottom: none;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+  }
+  
+  .admin-tabs button.active {
+    border-bottom-color: transparent;
+    border-left-color: var(--admin-primary);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .utilisateurs-table {
+    font-size: 0.75rem;
+  }
+  
+  .utilisateurs-table th,
+  .utilisateurs-table td {
+    padding: 0.5rem;
+  }
+  
+  .tab-content-wrapper {
+    padding: 1rem;
+  }
+}
+
+/* Animations subtiles */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content-wrapper {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.utilisateurs-table tbody tr {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Focus visible pour l'accessibilité */
+.admin-tabs button:focus-visible,
+.form-input:focus-visible,
+.form-select:focus-visible,
+.btn-add-user:focus-visible,
+.action-buttons button:focus-visible {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+}
+
+/* Scroll customisé pour les tables sur petits écrans */
+.utilisateurs-table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.utilisateurs-table-container::-webkit-scrollbar-track {
+  background: var(--admin-gray-100);
+  border-radius: 4px;
+}
+
+.utilisateurs-table-container::-webkit-scrollbar-thumb {
+  background: var(--admin-gray-300);
+  border-radius: 4px;
+}
+
+.utilisateurs-table-container::-webkit-scrollbar-thumb:hover {
+  background: var(--admin-gray-500);
+}
+
+/* Styles pour l'onglet Rôles & Permissions */
+.role-card table tbody tr:hover {
+  background-color: #f8f9fa !important;
+}
+
+.role-card {
+  margin-bottom: 2rem;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Styles pour le champ mot de passe avec bouton toggle */
+.password-field-container {
+  position: relative;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--admin-gray-500);
+  transition: var(--admin-transition);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  z-index: 1;
+}
+
+.password-toggle-btn:hover {
+  color: var(--admin-primary);
+  background-color: var(--admin-gray-100);
+}
+
+.password-toggle-btn:focus {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+}
+
+/* Indicateur de force du mot de passe (maintenant en bas du formulaire) */
+.password-strength {
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: var(--admin-transition);
+}
+
+.password-strength.weak {
+  color: var(--admin-danger);
+  border-color: var(--admin-danger);
+}
+
+.password-strength.medium {
+  color: var(--admin-warning);
+  border-color: var(--admin-warning);
+}
+
+.password-strength.strong {
+  color: var(--admin-success);
+  border-color: var(--admin-success);
+}
+
+/* Styles pour les boutons d'action dans le tableau */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: var(--admin-transition);
+  white-space: nowrap;
+}
+
+/* Bouton Désactiver/Réactiver */
+.btn-toggle-status {
+  background-color: var(--admin-warning);
+  color: white;
+}
+
+.btn-toggle-status:hover {
+  background-color: #e59400;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+}
+
+.btn-toggle-status.inactive {
+  background-color: var(--admin-success);
+}
+
+.btn-toggle-status.inactive:hover {
+  background-color: #059669;
+}
+
+/* Bouton Permissions */
+.btn-edit {
+  background-color: var(--admin-primary);
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: var(--admin-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+}
+
+/* Bouton Reset MDP */
+.btn-reset {
+  background-color: var(--admin-secondary);
+  color: white;
+}
+
+.btn-reset:hover {
+  background-color: #475569;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(100, 116, 139, 0.3);
+}
+
+/* Bouton Supprimer */
+.btn-delete {
+  background-color: var(--admin-danger) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-delete:hover {
+  background-color: #dc2626 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3) !important;
+}
+
+.btn-delete:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 1px 2px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Badge de statut utilisateur */
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-badge.active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.inactive {
+  background-color: #fef2f2;
+  color: #991b1b;
+}

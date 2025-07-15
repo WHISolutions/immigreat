@@ -1,0 +1,400 @@
+.dossiers-container {
+  padding: var(--spacing-lg);
+}
+
+.dossiers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.dossiers-header h2 {
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-primary:hover {
+  background-color: #0f3a6d;
+}
+
+.btn-primary span {
+  margin-right: var(--spacing-xs);
+  font-size: 18px;
+}
+
+.btn-secondary {
+  background-color: var(--color-light-gray);
+  color: var(--color-dark-gray);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.filtres-container {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  background-color: var(--color-white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.filtre-group {
+  display: flex;
+  align-items: center;
+}
+
+.filtre-group label {
+  margin-right: var(--spacing-xs);
+  color: var(--color-dark-gray);
+  font-weight: var(--font-weight-medium);
+}
+
+.filtre-group select {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-white);
+}
+
+.dossiers-table-container {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  max-height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+  position: relative; /* Needed for sticky headers or other positioned elements */
+}
+
+.dossiers-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Helps with column width distribution */
+}
+
+.dossiers-table-container th,
+.dossiers-table-container td {
+  padding: 6px; /* Reduced padding */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9em; /* Slightly reduced font size */
+  word-wrap: break-word; /* Allow long words to break and wrap */
+  overflow-wrap: break-word; /* Ensure wrapping for long strings */
+  white-space: normal; /* Ensure text wraps to new lines */
+}
+
+.dossiers-table-container thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa; /* Or your table header background color */
+  z-index: 1;
+  color: #333; /* Added to ensure header text is visible */
+}
+
+.dossiers-table th {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-align: left;
+  padding: var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.dossiers-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.dossiers-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.statut-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+}
+
+.statut-en-cours {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.statut-en-attente {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+.statut-complété {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.statut-refusé {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.statut-annulé {
+  background-color: #f5f5f5;
+  color: #757575;
+}
+
+.progression-bar-container {
+  width: 100%;
+  height: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progression-bar-container.large {
+  height: 20px;
+  margin-bottom: var(--spacing-md);
+}
+
+.progression-bar {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.progression-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-dark-gray);
+}
+
+.progression-bar-container.large .progression-text {
+  font-size: 14px;
+  color: var(--color-white);
+}
+
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-action {
+  background-color: var(--color-light-gray);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: var(--color-white);
+  min-width: 200px;
+  box-shadow: var(--shadow-md);
+  z-index: 1;
+  border-radius: var(--border-radius-sm);
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #f5f5f5;
+}
+
+.actions-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  width: 600px;
+  max-width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--color-primary);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-dark-gray);
+}
+
+.modal-content form {
+  padding: var(--spacing-lg);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-dark-gray);
+  font-weight: var(--font-weight-medium);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-sm);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+/* Dossier details styles */
+.dossier-details {
+  padding: var(--spacing-lg);
+  display: flex;
+  gap: var(--spacing-xl);
+}
+
+.dossier-info {
+  flex: 2;
+}
+
+.dossier-info h4,
+.dossier-actions h4 {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.dossier-info p {
+  margin: var(--spacing-sm) 0;
+}
+
+.dossier-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.dossier-actions button {
+  margin-bottom: var(--spacing-sm);
+}
+
+.progression-update {
+  margin-top: var(--spacing-lg);
+}
+
+.progression-update label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.progression-slider {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.progression-slider input {
+  flex: 1;
+}
+
+.modal-footer {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--color-light-gray);
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .filtres-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .dossier-details {
+    flex-direction: column;
+  }
+}

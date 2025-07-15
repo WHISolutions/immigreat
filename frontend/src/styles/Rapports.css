@@ -1,0 +1,656 @@
+.rapports-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.rapports-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+}
+
+.rapports-header h2 {
+  margin: 0;
+  color: #1a73e8;
+  font-size: 1.5rem;
+}
+
+.rapports-header p {
+  margin: 0.5rem 0 0;
+  color: #5f6368;
+  font-size: 0.9rem;
+}
+
+.rapports-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.rapports-sidebar {
+  width: 350px;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.rapports-preview {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.section-title {
+  margin: 1rem 0 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.section-title h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #202124;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.search-box i {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #5f6368;
+}
+
+.clients-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.client-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.client-item:hover {
+  background-color: #f1f3f4;
+}
+
+.client-item.selected {
+  background-color: #e8f0fe;
+  border-left: 3px solid #1a73e8;
+}
+
+.client-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1a73e8;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 0.75rem;
+}
+
+.client-info {
+  flex: 1;
+}
+
+.client-name {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.client-dossier {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #5f6368;
+}
+
+.client-status {
+  margin-left: 0.5rem;
+}
+
+.status-indicator {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.no-results {
+  text-align: center;
+  padding: 1rem;
+  color: #5f6368;
+  font-style: italic;
+}
+
+.loading-clients {
+  text-align: center;
+  padding: 1rem;
+  color: #5f6368;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.loading-clients i {
+  color: #1a73e8;
+}
+
+.error-clients {
+  text-align: center;
+  padding: 1rem;
+  color: #d32f2f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-clients i {
+  color: #d32f2f;
+  font-size: 1.2rem;
+}
+
+.btn-retry {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.btn-retry:hover {
+  background-color: #1765cc;
+}
+
+.rapport-types,
+.personnalisation-options,
+.diffusion-options {
+  margin-bottom: 1rem;
+}
+
+.option-group {
+  margin-bottom: 1rem;
+}
+
+.option-group h4 {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #5f6368;
+}
+
+.option-group label,
+.radio-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.25rem 0;
+}
+
+.radio-group label {
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.radio-group label:hover {
+  background-color: #f1f3f4;
+}
+
+.radio-group label.selected {
+  background-color: #e8f0fe;
+  color: #1a73e8;
+}
+
+.rapport-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: #1a73e8;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1765cc;
+}
+
+.btn-primary:disabled {
+  background-color: #a8c7fa;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #f1f3f4;
+  color: #1a73e8;
+}
+
+.btn-secondary:hover {
+  background-color: #e8eaed;
+}
+
+.btn-secondary:disabled {
+  color: #80868b;
+  cursor: not-allowed;
+}
+
+.no-selection,
+.no-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #5f6368;
+}
+
+.no-selection-icon,
+.no-preview-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #dadce0;
+}
+
+.rapport-apercu {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.rapport-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #1a73e8;
+}
+
+.rapport-logo img {
+  height: 60px;
+}
+
+.rapport-titre h2 {
+  margin: 0;
+  color: #1a73e8;
+}
+
+.rapport-titre p {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: #5f6368;
+}
+
+.rapport-coordonnees {
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.rapport-coordonnees p {
+  margin: 0.25rem 0;
+}
+
+.rapport-client-info {
+  margin-bottom: 2rem;
+}
+
+.rapport-client-info h3 {
+  margin: 0 0 1rem;
+  color: #202124;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.rapport-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.rapport-section {
+  margin-bottom: 2rem;
+}
+
+.rapport-section h3 {
+  margin: 0 0 1rem;
+  color: #202124;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.rapport-progression {
+  margin-bottom: 1.5rem;
+}
+
+.progression-bar-container {
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progression-bar {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.progression-label {
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.rapport-etapes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.rapport-etapes::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+.etape {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  z-index: 2;
+}
+
+.etape-point {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  margin-bottom: 0.5rem;
+}
+
+.etape.complete .etape-point {
+  background-color: #1a73e8;
+}
+
+.etape-label {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.etape-date {
+  font-size: 0.7rem;
+  color: #5f6368;
+}
+
+.etape-description {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.2rem;
+  font-style: italic;
+}
+
+.prochaine-etape {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f0f8ff;
+  border-left: 4px solid #1a73e8;
+  border-radius: 4px;
+}
+
+.prochaine-etape h4 {
+  margin: 0 0 0.5rem;
+  color: #1a73e8;
+  font-size: 1rem;
+}
+
+.prochaine-etape p {
+  margin: 0;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.no-documents,
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.no-documents p,
+.no-data p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.etape.en-cours .etape-point {
+  background-color: #ffa726;
+  border-color: #ff9800;
+}
+
+.etape.en-cours .etape-label {
+  color: #ff9800;
+  font-weight: 500;
+}
+
+/* Amélioration des badges de statut */
+.statut-badge.statut-info {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #bbdefb;
+}
+
+/* Styles pour l'indicateur de chargement des données */
+.loading-rapport-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.loading-rapport-data i {
+  margin-right: 0.5rem;
+  color: #1a73e8;
+}
+
+/* Styles pour les informations client étendues */
+.rapport-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.rapport-info-grid div {
+  min-height: auto;
+}
+
+.rapport-info-grid p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+/* Styles pour les actions requises améliorées */
+.action-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #fff3e0;
+  border-left: 4px solid #ff9800;
+  border-radius: 4px;
+}
+
+.action-icon {
+  margin-right: 1rem;
+  color: #ff9800;
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+.action-content {
+  flex: 1;
+}
+
+.action-titre {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.action-description {
+  margin: 0 0 0.5rem;
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.action-echeance {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #ff6f00;
+  font-weight: 500;
+}
+
+/* Amélioration du footer */
+.rapport-footer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 8px 8px;
+}
+
+.rapport-footer p {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.rapport-footer p:last-child {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Responsive pour les données réelles */
+@media (max-width: 768px) {
+  .rapport-info-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .action-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .action-icon {
+    margin: 0 0 0.5rem;
+  }
+}
+
+@media print {
+  .rapports-sidebar,
+  .rapports-header,
+  .dashboard-header,
+  .sidebar,
+  .breadcrumb-container {
+    display: none !important;
+  }
+  
+  .rapports-preview {
+    overflow: visible;
+    height: auto;
+    padding: 0;
+  }
+  
+  .rapport-apercu {
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .main-content,
+  .module-content,
+  .rapports-container,
+  .rapports-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  
+  body {
+    background-color: white;
+  }
+}

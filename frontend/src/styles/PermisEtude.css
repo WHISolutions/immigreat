@@ -1,0 +1,157 @@
+.permis-etude-section {
+  background-color: var(--color-neutral-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.academic-info-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.academic-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.academic-info-header h5 {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.diplomes-list, .etablissements-list {
+  margin-bottom: var(--spacing-md);
+}
+
+.niveau-etudes-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.niveau-etudes-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.niveau-etudes-option input[type="checkbox"] {
+  margin: 0;
+}
+
+.programme-etudes-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.programme-etudes-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.programme-etudes-option input[type="checkbox"] {
+  margin: 0;
+}
+
+.garants-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.garants-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.garant-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.garant-option input[type="checkbox"] {
+  margin: 0;
+}
+
+.etablissement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--color-neutral-light);
+}
+
+.etablissement-item:last-child {
+  border-bottom: none;
+}
+
+.etablissement-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.form-inline-etude {
+  background-color: var(--color-neutral-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-inline-etude .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: flex-end;
+}
+
+.form-inline-etude .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-inline-etude .form-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.capacite-financiere {
+  margin-top: var(--spacing-sm);
+}
+
+.capacite-financiere label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.capacite-financiere input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+}
+
+@media (max-width: 768px) {
+  .form-inline-etude .form-row {
+    flex-direction: column;
+  }
+  
+  .form-inline-etude .form-group {
+    width: 100%;
+  }
+  
+  .niveau-etudes-options,
+  .programme-etudes-options,
+  .garants-options {
+    grid-template-columns: 1fr;
+  }
+}

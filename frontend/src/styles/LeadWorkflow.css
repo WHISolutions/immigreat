@@ -1,0 +1,520 @@
+.lead-workflow-container {
+  padding: var(--spacing-md);
+}
+
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.workflow-header h2 {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.workflow-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.notification-bell {
+  position: relative;
+  margin-right: var(--spacing-md);
+}
+
+.notification-bell i {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color var(--transition-fast);
+}
+
+.notification-bell i:hover {
+  background-color: var(--color-neutral-light);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--color-secondary);
+  color: white;
+  font-size: 0.7rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  min-width: 300px;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-sm);
+  z-index: 10;
+  margin-top: 10px;
+}
+
+.notification-bell:hover .notification-dropdown {
+  display: block;
+}
+
+.notification-dropdown h3 {
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-light);
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+}
+
+.notification-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification-dropdown li {
+  display: flex;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-light);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.notification-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.notification-dropdown li:hover {
+  background-color: var(--color-neutral-light);
+}
+
+.notification-dropdown li.unread {
+  background-color: rgba(26, 75, 140, 0.05);
+}
+
+.notification-icon {
+  margin-right: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-content p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.notification-date {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.no-notifications {
+  padding: var(--spacing-md);
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.workflow-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-neutral-medium);
+  margin-bottom: var(--spacing-md);
+  overflow-x: auto;
+}
+
+.workflow-tabs button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.workflow-tabs button:hover {
+  color: var(--color-primary);
+}
+
+.workflow-tabs button.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.workflow-table-container {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.workflow-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.workflow-table th {
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-neutral-light);
+  border-bottom: 1px solid var(--color-neutral-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.workflow-table td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-light);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.workflow-table tr:last-child td {
+  border-bottom: none;
+}
+
+.workflow-table tr:hover td {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.lead-name {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.status-nouveau {
+  background-color: rgba(2, 136, 209, 0.1);
+  color: var(--color-info);
+}
+
+.status-contacte {
+  background-color: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+}
+
+.status-a-recontacter {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: #ff9800;
+}
+
+.status-rendez-vous-pris {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+}
+
+.status-consultation-effectuee {
+  background-color: rgba(0, 150, 136, 0.1);
+  color: #009688;
+}
+
+.status-consultation-manquee {
+  background-color: rgba(198, 40, 40, 0.1);
+  color: var(--color-error);
+}
+
+.status-qualifie {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+}
+
+.status-non-qualifie {
+  background-color: rgba(158, 158, 158, 0.1);
+  color: #757575;
+}
+
+.status-pas-interesse {
+  background-color: rgba(117, 117, 117, 0.1);
+  color: #757575;
+}
+
+.status-client {
+  background-color: rgba(26, 75, 140, 0.1);
+  color: var(--color-primary);
+}
+
+.not-assigned {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.no-action {
+  color: var(--text-secondary);
+}
+
+.action-due {
+  color: var(--color-error);
+  font-weight: var(--font-weight-medium);
+}
+
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-action {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-secondary);
+}
+
+.btn-action:hover {
+  background-color: var(--color-neutral-light);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-sm);
+  z-index: 10;
+}
+
+.actions-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.dropdown-content button:hover {
+  background-color: var(--color-neutral-light);
+}
+
+.status-actions-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.status-actions-dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-sm);
+  z-index: 10;
+}
+
+.status-actions-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-light);
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: var(--spacing-md);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--color-neutral-light);
+}
+
+.assign-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.btn-assign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-neutral-light);
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-assign:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.reminder-details, .conversion-details {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-neutral-light);
+  border-radius: var(--border-radius-sm);
+}
+
+.reminder-icon, .conversion-icon {
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.reminder-text p, .conversion-text p {
+  margin: 0;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-neutral-light);
+  color: var(--text-primary);
+  border: 1px solid var(--color-neutral-medium);
+  padding: 10px 16px;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-neutral-medium);
+}
+
+.no-results {
+  text-align: center;
+  padding: var(--spacing-lg);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+@media (max-width: 992px) {
+  .workflow-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+  
+  .workflow-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .workflow-tabs {
+    overflow-x: auto;
+  }
+  
+  .workflow-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

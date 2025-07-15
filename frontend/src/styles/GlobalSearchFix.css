@@ -1,0 +1,155 @@
+/* 
+ * Fichier de correction pour la barre de recherche globale
+ * Assure un fond blanc pur (#ffffff) en toutes circonstances
+ * Supprime toutes les ombres internes et couleurs grises
+ */
+
+/* Force la couleur de fond du conteneur de recherche */
+.search-global,
+.search-global *,
+.global-search-container,
+.global-search-container *,
+.global-search-form,
+.global-search-form * {
+  box-sizing: border-box;
+}
+
+/* Styles pour le formulaire de recherche - fond blanc pur */
+.global-search-form {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  inset: none !important;
+  text-shadow: none !important;
+}
+
+.global-search-form:focus-within {
+  background-color: #ffffff !important; /* Fond blanc pur toujours */
+  background: #ffffff !important;
+  border-color: #007bff !important;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1) !important;
+  inset: none !important;
+}
+
+.global-search-form:hover {
+  background-color: #ffffff !important; /* Fond blanc pur toujours */
+  background: #ffffff !important;
+  border-color: #c0c0c0 !important;
+  box-shadow: none !important;
+  inset: none !important;
+}
+
+.global-search-form:active {
+  background-color: #ffffff !important; /* Fond blanc pur toujours */
+  background: #ffffff !important;
+  box-shadow: none !important;
+  inset: none !important;
+}
+
+/* Styles pour l'input - toujours transparent avec fond blanc du parent */
+.global-search-input {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  inset: none !important;
+  text-shadow: none !important;
+}
+
+.global-search-input:focus {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  inset: none !important;
+}
+
+.global-search-input:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  inset: none !important;
+}
+
+.global-search-input:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  inset: none !important;
+}
+
+/* Styles pour la barre de recherche globale dans le fichier global.css */
+.search-global {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.search-global input {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  inset: none !important;
+  text-shadow: none !important;
+}
+
+.search-global input:focus {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1) !important;
+  inset: none !important;
+}
+
+.search-global input:hover {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  inset: none !important;
+}
+
+.search-global input:active {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  inset: none !important;
+}
+
+/* Écrasement de toute règle CSS qui pourrait appliquer des couleurs grises */
+*[class*="search"] input,
+*[class*="global-search"] input {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
+/* Suppression des ombres internes et des effets indésirables */
+.global-search-form,
+.global-search-input,
+.search-global,
+.search-global input {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* États focus avec bordure bleue mais fond blanc */
+.global-search-form:focus-within,
+.search-global input:focus {
+  -webkit-box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1) !important;
+  -moz-box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1) !important;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1) !important;
+}

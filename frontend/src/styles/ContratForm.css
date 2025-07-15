@@ -1,0 +1,115 @@
+.contrat-preview-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.preview-content {
+  background-color: white;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.contrat-preview {
+  font-family: 'Times New Roman', Times, serif;
+  line-height: 1.5;
+  color: #333;
+}
+
+.contrat-preview h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.contrat-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.contrat-parties {
+  margin-bottom: 20px;
+}
+
+.contrat-parties h3 {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 15px 0 5px 0;
+}
+
+.contrat-attendus {
+  margin: 20px 0;
+}
+
+.contrat-section {
+  margin: 20px 0;
+}
+
+.contrat-section h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contrat-section ul {
+  margin-left: 20px;
+}
+
+.contrat-signatures {
+  margin-top: 40px;
+}
+
+.signature-block {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.signature-line {
+  width: 45%;
+}
+
+.upload-section {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.upload-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+@media print {
+  .preview-actions, .upload-section, button {
+    display: none !important;
+  }
+  
+  .preview-content {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    max-height: none;
+    overflow: visible;
+  }
+  
+  .contrat-preview {
+    font-size: 12pt;
+  }
+}

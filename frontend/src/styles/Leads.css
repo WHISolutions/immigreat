@@ -1,0 +1,1095 @@
+.leads-container {
+  padding: var(--spacing-md);
+}
+
+.leads-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.leads-header h2 {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.leads-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.search-filter-container {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  align-items: center;
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius-sm);
+  padding: 0 var(--spacing-md);
+  height: 40px;
+  flex: 1;
+  min-width: 300px;
+}
+
+.search-container i {
+  margin-right: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+.search-container input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: var(--font-size-sm);
+  height: 40px;
+  line-height: 40px;
+}
+
+.filtres-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--spacing-md);
+  align-items: center;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  height: 40px;
+}
+
+.filtre-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  white-space: nowrap;
+  height: 40px;
+}
+
+.filtre-group label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-weight: 500;
+  line-height: 40px;
+}
+
+.filtre-group select {
+  padding: 8px 12px;
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  min-width: 120px;
+  height: 40px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.btn-text:hover {
+  background-color: rgba(26, 75, 140, 0.1);
+}
+
+.leads-table-container {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  max-height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+  position: relative; /* Needed if you have sticky headers or other positioned elements inside */
+}
+
+/* Ensure dropdown menus are not clipped */
+.leads-table-container .actions-dropdown {
+  position: relative; /* Keep relative positioning */
+}
+
+.leads-table-container .actions-dropdown .dropdown-content {
+  position: absolute; /* Use absolute positioning within relative container */
+  z-index: 9999; /* Very high z-index to ensure it appears above everything */
+  right: 0; /* Ensure it appears on the right side */
+  top: 100%; /* Position below the button */
+}
+
+.leads-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Helps with column width distribution, can be 'auto' or 'fixed' */
+}
+
+/* Définir des largeurs spécifiques pour les colonnes */
+.leads-table th:nth-child(1), /* Nom */
+.leads-table td:nth-child(1) {
+  width: 17%; /* Réduit de 18% à 17% */
+}
+
+.leads-table th:nth-child(2), /* Email */
+.leads-table td:nth-child(2) {
+  width: 14%; /* Réduit de 15% à 14% */
+}
+
+.leads-table th:nth-child(3), /* Téléphone */
+.leads-table td:nth-child(3) {
+  width: 11%; /* Réduit de 12% à 11% */
+}
+
+.leads-table th:nth-child(4), /* Source */
+.leads-table td:nth-child(4) {
+  width: 10%; /* Reste à 10% */
+}
+
+.leads-table th:nth-child(5), /* Statut */
+.leads-table td:nth-child(5) {
+  width: 16%; /* Largeur suffisante pour le badge de statut */
+}
+
+.leads-table th:nth-child(6), /* Date de création */
+.leads-table td:nth-child(6) {
+  width: 12%; /* Largeur fixe pour éviter le chevauchement */
+  min-width: 100px; /* Largeur minimale garantie */
+}
+
+.leads-table th:nth-child(7), /* Conseillère */
+.leads-table td:nth-child(7) {
+  width: 12%; /* Reste à 12% */
+}
+
+.leads-table th:nth-child(8), /* Actions */
+.leads-table td:nth-child(8) {
+  width: 8%; /* Augmente la largeur de 5% à 8% */
+  min-width: 70px; /* Augmente la largeur minimale de 50px à 70px */
+  text-align: center; /* Centre le contenu de la colonne Actions */
+}
+
+.leads-table-container th,
+.leads-table-container td {
+  padding: 6px; /* Reduced padding */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9em; /* Slightly reduced font size */
+  word-wrap: break-word; /* Allow long words to break and wrap */
+  overflow-wrap: break-word; /* Ensure wrapping for long strings */
+  white-space: normal; /* Ensure text wraps to new lines */
+}
+
+.leads-table-container thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa; /* Or your table header background color */
+  z-index: 1;
+  color: #333;
+}
+
+.leads-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leads-table th {
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-neutral-light);
+  border-bottom: 1px solid var(--color-neutral-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.leads-table td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-light);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.leads-table tr:last-child td {
+  border-bottom: none;
+}
+
+.leads-table tr:hover td {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.clickable {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.clickable:hover {
+  text-decoration: underline;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px; /* Réduit l'espace entre l'icône et le texte */
+  padding: 4px 8px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  max-width: 100%; /* S'assure que le badge ne dépasse pas la largeur de sa cellule */
+  white-space: nowrap; /* Évite le retour à la ligne par défaut */
+  overflow: hidden; /* Cache le débordement */
+  text-overflow: ellipsis; /* Affiche ... si le texte est trop long */
+}
+
+/* Styles spécifiques pour les statuts longs */
+.status-consultation-effectuee,
+.status-consultation-manquee,
+.status-rendez-vous-pris {
+  font-size: 0.65rem; /* Taille de police légèrement plus petite pour les statuts longs */
+  padding: 3px 6px; /* Padding réduit pour économiser l'espace */
+  gap: 3px; /* Espace réduit entre icône et texte */
+}
+
+/* Optionnel: permettre le passage à la ligne pour les très longs statuts en cas de besoin */
+@media (max-width: 768px) {
+  .status-badge {
+    white-space: normal; /* Permet le retour à la ligne sur les petits écrans */
+    line-height: 1.2;
+  }
+}
+
+.status-nouveau {
+  background-color: rgba(2, 136, 209, 0.2);
+  color: #0056a3; /* Bleu plus foncé pour un meilleur contraste */
+  font-weight: var(--font-weight-semibold); /* Texte plus épais pour meilleure lisibilité */
+}
+
+.status-contacte {
+  background-color: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+}
+
+.status-consultation-manquee {
+  background-color: rgba(198, 40, 40, 0.1);
+  color: var(--color-error);
+}
+
+.status-non-qualifie {
+  background-color: rgba(239, 108, 0, 0.1);
+  color: var(--color-warning);
+}
+
+.status-pas-interesse {
+  background-color: rgba(117, 117, 117, 0.1);
+  color: #757575;
+}
+
+.status-client {
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+  font-weight: var(--font-weight-bold);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.status-a-recontacter {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: #ff9800;
+}
+
+.status-rendez-vous-pris {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+}
+
+.status-consultation-effectuee {
+  background-color: rgba(0, 150, 136, 0.1);
+  color: #009688;
+}
+
+.status-qualifie {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+}
+
+.status-non-interesse {
+  background-color: rgba(198, 40, 40, 0.1);
+  color: var(--color-error);
+}
+
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%; /* Utilise toute la largeur de la cellule */
+  text-align: center; /* Centre le dropdown dans la cellule */
+}
+
+.btn-action {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-secondary);
+}
+
+.btn-action:hover {
+  background-color: var(--color-neutral-light);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-sm);
+  z-index: 9999; /* Increased z-index significantly */
+  border: 1px solid #e0e0e0; /* Add border for better visibility */
+  overflow: visible; /* Ensure content is not clipped */
+  max-height: none; /* Remove any height restrictions */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.dropdown-content.show {
+  display: block;
+  animation: fadeInDropdown 0.2s ease-out;
+}
+
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-content button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+  white-space: nowrap; /* Prevent text wrapping in buttons */
+}
+
+.dropdown-content button:hover {
+  background-color: var(--color-neutral-light);
+}
+
+.dropdown-content button.actions-dropdown-item {
+  border-bottom: none; /* Remove any border conflicts */
+}
+
+.dropdown-content button.danger {
+  color: var(--color-error);
+}
+
+.dropdown-content button.danger:hover {
+  background-color: rgba(198, 40, 40, 0.1);
+}
+
+/* Specific styling for table container dropdowns */
+.leads-table-container .dropdown-content {
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  z-index: 10000; /* Even higher z-index for table context */
+  position: absolute; /* Keep absolute positioning */
+  right: 0; /* Align to the right */
+  top: 100%; /* Position below button */
+  min-width: 200px; /* Ensure minimum width */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: visible; /* Ensure content is not clipped */
+}
+
+/* Améliorer la visibilité des dropdowns dans le contexte du tableau */
+.leads-table td .actions-dropdown {
+  position: relative;
+}
+
+.leads-table td .dropdown-content {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 1001; /* Z-index encore plus élevé dans le contexte du tableau */
+  transform: translateX(0); /* Assure un positionnement correct */
+}
+
+.btn-assign {
+  background-color: transparent;
+  border: 1px dashed var(--color-primary);
+  color: var(--color-primary);
+  padding: 4px 8px;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-assign:hover {
+  background-color: rgba(26, 75, 140, 0.05);
+}
+
+.btn-assign:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #f1f1f1;
+}
+
+.modal-large {
+  max-width: 800px;
+  max-height: 90vh;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-light);
+  flex-shrink: 0;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+  background-color: #f8f9fa;
+}
+
+form {
+  padding: var(--spacing-md);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  flex: 0 0 100%;
+}
+
+.form-group label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.form-group input[readonly] {
+  background-color: var(--color-neutral-light);
+  cursor: not-allowed;
+}
+
+.form-help {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-neutral-light);
+  background-color: white;
+  position: sticky;
+  bottom: 0;
+  margin-left: calc(-1 * var(--spacing-md));
+  margin-right: calc(-1 * var(--spacing-md));
+  margin-bottom: calc(-1 * var(--spacing-md));
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+}
+
+.distribution-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.distribution-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.distribution-item label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.distribution-item input {
+  padding: 10px 12px;
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+/*
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-neutral-light);
+  color: var(--text-primary);
+  border: 1px solid var(--color-neutral-medium);
+  padding: 10px 16px;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-neutral-medium);
+}
+
+.btn-help {
+  background-color: transparent;
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+  padding: 10px 16px;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.btn-help:hover {
+  background-color: rgba(2, 136, 209, 0.1);
+}
+*/
+
+.no-results {
+  text-align: center;
+  padding: var(--spacing-lg);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+@media (max-width: 1200px) {
+  .search-filter-container {
+    flex-wrap: wrap;
+  }
+  
+  .search-container {
+    flex: 1 1 100%;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .filtres-container {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+  
+  /* Assurer que la colonne Actions reste visible sur les écrans moyens */
+  .leads-table th:nth-child(8), /* Actions */
+  .leads-table td:nth-child(8) {
+    min-width: 75px; /* Augmente la largeur minimale sur écrans moyens */
+  }
+}
+
+@media (max-width: 768px) {
+  .search-filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-container {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .filtres-container {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .filtre-group {
+    flex: 1;
+    min-width: 140px;
+  }
+  
+  .filtre-group select {
+    min-width: 100px;
+  }
+  
+  .leads-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  /* Garantir que la colonne Actions reste visible sur petits écrans */
+  .leads-table-container {
+    overflow-x: auto; /* Permet le défilement horizontal */
+  }
+  
+  .leads-table {
+    min-width: 800px; /* Largeur minimale du tableau pour éviter l'écrasement */
+  }
+  
+  /* Largeur minimale encore plus généreuse pour la colonne Actions sur petits écrans */
+  .leads-table th:nth-child(8), /* Actions */
+  .leads-table td:nth-child(8) {
+    min-width: 80px; /* Augmente la largeur minimale sur petits écrans */
+    position: sticky; /* Colle la colonne Actions à droite */
+    right: 0;
+    background-color: white; /* Fond blanc pour masquer le contenu en dessous */
+    border-left: 1px solid var(--color-neutral-light); /* Bordure pour délimiter */
+    z-index: 2; /* Z-index pour passer au-dessus du contenu */
+  }
+  
+  /* Style pour l'en-tête sticky */
+  .leads-table thead th:nth-child(8) {
+    background-color: var(--color-neutral-light);
+    border-left: 1px solid var(--color-neutral-medium);
+    z-index: 3; /* Z-index encore plus élevé pour l'en-tête */
+  }
+}
+
+/* Styles pour le message de verrouillage des leads convertis */
+.dropdown-info {
+  padding: 12px 15px;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  color: #6c757d;
+  font-size: var(--font-size-sm);
+}
+
+.dropdown-info i {
+  color: #007bff;
+  margin-right: 6px;
+}
+
+.dropdown-info small {
+  color: #6c757d;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+/* Style pour les champs désactivés dans le modal */
+.form-group select:disabled {
+  background-color: #f8f9fa !important;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-group select:disabled option {
+  color: #6c757d;
+}
+
+/* Style pour le badge de statut verrouillé */
+.status-badge.locked {
+  position: relative;
+}
+
+.status-badge.locked::after {
+  content: '\f023'; /* Icône de cadenas Font Awesome */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 0.7em;
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+/* Styles de scrollbar pour WebKit (Chrome, Safari, Edge) */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Styles pour le contenu du formulaire */
+.modal-form-content {
+  padding: var(--spacing-md);
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Style pour les messages d'information dans le modal */
+.modal-info-message {
+  background-color: #e3f2fd;
+  border: 1px solid #2196f3;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: var(--spacing-md);
+  color: #1976d2;
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-info-message i {
+  color: #2196f3;
+}
+
+/* Responsive pour les modals */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+  
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .modal-header {
+    padding: 15px;
+  }
+  
+  .modal-form-content {
+    padding: 15px;
+  }
+  
+  .form-actions {
+    padding: 15px;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* STYLES POUR LE MENU DÉROULANT DES ACTIONS */
+
+/* Container principal du dropdown - assurer qu'il ne soit pas coupé */
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%; /* Utilise toute la largeur de la cellule */
+  text-align: center; /* Centre le dropdown dans la cellule */
+}
+
+/* Bouton avec les trois points verticaux */
+.actions-dropdown-button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: var(--text-secondary, #6c757d);
+  font-size: 16px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actions-dropdown-button:hover {
+  background-color: var(--color-neutral-light, #f8f9fa);
+  color: var(--color-primary, #007bff);
+}
+
+/* Menu déroulant - paramètres critiques pour éviter qu'il soit coupé */
+.actions-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  border: 1px solid var(--color-neutral-medium, #dee2e6);
+  border-radius: var(--border-radius-sm, 6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 220px;
+  z-index: 9999 !important; /* Z-index très élevé pour passer par-dessus tout */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+/* Classe pour afficher le menu */
+.actions-dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Items du menu */
+.actions-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: var(--font-size-sm, 14px);
+  color: var(--text-primary, #212529);
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--color-neutral-light, #f8f9fa);
+}
+
+.actions-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.actions-dropdown-item:hover {
+  background-color: var(--color-neutral-light, #f8f9fa);
+}
+
+.actions-dropdown-item.danger {
+  color: var(--color-danger, #dc3545);
+}
+
+.actions-dropdown-item.danger:hover {
+  background-color: #ffebee;
+}
+
+.actions-dropdown-item i {
+  width: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Information pour les leads convertis */
+.dropdown-info {
+  padding: 12px 16px;
+  color: var(--text-secondary, #6c757d);
+  font-size: var(--font-size-xs, 12px);
+  border-top: 1px solid var(--color-neutral-light, #f8f9fa);
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+.dropdown-info i {
+  margin-right: 8px;
+}
+
+.dropdown-info small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+/* CORRECTION DES CONTENEURS PARENTS POUR ÉVITER LE CLIPPING */
+
+/* Container du tableau - doit permettre l'overflow visible */
+.leads-table-container {
+  overflow: visible !important;
+  position: static !important;
+}
+
+/* Table elle-même */
+.leads-table {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Cellules du tableau */
+.leads-table td {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Container principal - s'assurer qu'il n'y a pas d'overflow hidden */
+.leads-container {
+  overflow: visible !important;
+  position: relative;
+}
+
+/* Pour les dropdowns qui apparaissent en bas de l'écran, les forcer vers le haut */
+.actions-dropdown-menu.dropdown-top {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 4px;
+  transform: translateY(10px);
+}
+
+.actions-dropdown-menu.dropdown-top.show {
+  transform: translateY(0);
+}
+
+/* Pour les dropdowns qui apparaissent à droite de l'écran, les aligner à gauche */
+.actions-dropdown-menu.dropdown-left {
+  right: auto;
+  left: 0;
+}
+
+/* Style pour le bouton d'action dans le tableau */
+.btn-action {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 10px; /* Augmente le padding pour une meilleure zone de clic */
+  border-radius: var(--border-radius-sm);
+  color: var(--text-secondary);
+  width: auto; /* Largeur automatique pour le bouton */
+  min-width: 45px; /* Largeur minimale pour le bouton */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action:hover {
+  background-color: var(--color-neutral-light);
+  color: var(--color-primary);
+}
+
+/* Responsive pour les petits écrans */
+@media (max-width: 768px) {
+  .actions-dropdown-menu {
+    min-width: 180px;
+    right: -10px; /* Ajuster pour les petits écrans */
+  }
+  
+  .actions-dropdown-item {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}

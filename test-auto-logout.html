@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Déconnexion Automatique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .connected { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .disconnected { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        button {
+            padding: 15px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn-start { background: #28a745; color: white; }
+        .btn-stop { background: #dc3545; color: white; }
+        .btn-continue { background: #ffc107; color: black; }
+        .logs {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .countdown {
+            font-size: 24px;
+            color: #e74c3c;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Test Simple Déconnexion Automatique</h1>
+        
+        <div id="status" class="status disconnected">
+            🔴 Déconnecté
+        </div>
+        
+        <div id="countdown" class="countdown" style="display: none;">
+            ⏱️ <span id="countdownValue">0</span> secondes restantes
+        </div>
+        
+        <div id="controls">
+            <button id="startBtn" class="btn-start">🚀 Démarrer Test (8 secondes)</button>
+            <button id="stopBtn" class="btn-stop" style="display: none;">⏹️ Arrêter Test</button>
+            <button id="continueBtn" class="btn-continue" style="display: none;">✅ Prolonger Session</button>
+        </div>
+        
+        <div class="logs" id="logs">
+            <div>Prêt pour le test...</div>
+        </div>
+        
+        <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-top: 20px;">
+            <h3>📋 Instructions</h3>
+            <ol>
+                <li>Cliquez sur "Démarrer Test"</li>
+                <li><strong>NE BOUGEZ PAS</strong> la souris et ne tapez rien</li>
+                <li>Après 5 secondes → Avertissement</li>
+                <li>Après 8 secondes → Déconnexion automatique</li>
+            </ol>
+            <p><strong>⚠️ Important:</strong> Tout mouvement de souris ou frappe clavier remet le timer à zéro!</p>
+        </div>
+    </div>
+
+    <script>
+        // Simulation du hook useAutoLogout en JavaScript pur
+        class AutoLogoutSimulator {
+            constructor(timeout, onLogout, warningTime) {
+                this.timeout = timeout;
+                this.onLogout = onLogout;
+                this.warningTime = warningTime * 1000; // Convertir en millisecondes
+                this.timeoutRef = null;
+                this.warningTimeoutRef = null;
+                this.isAuthenticated = false;
+                this.showWarning = false;
+                this.onWarningChange = null;
+                
+                this.setupEventListeners();
+                this.log('🎯 AutoLogoutSimulator initialisé');
+            }
+            
+            log(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logElement = document.getElementById('logs');
+                logElement.innerHTML += `<div>${timestamp}: ${message}</div>`;
+                logElement.scrollTop = logElement.scrollHeight;
+                console.log(`[AUTO-LOGOUT] ${message}`);
+            }
+            
+            setAuthenticated(isAuth) {
+                this.log(`🔐 Changement d'authentification: ${isAuth}`);
+                this.isAuthenticated = isAuth;
+                
+                if (!isAuth) {
+                    this.clearTimers();
+                    this.log('🔒 Timers arrêtés - utilisateur déconnecté');
+                } else {
+                    this.log('🔓 Démarrage des timers - utilisateur connecté');
+                    this.resetTimer();
+                }
+            }
+            
+            clearTimers() {
+                if (this.timeoutRef) {
+                    clearTimeout(this.timeoutRef);
+                    this.timeoutRef = null;
+                }
+                if (this.warningTimeoutRef) {
+                    clearTimeout(this.warningTimeoutRef);
+                    this.warningTimeoutRef = null;
+                }
+                this.setShowWarning(false);
+            }
+            
+            resetTimer() {
+                this.log('🔄 Réinitialisation du timer');
+                this.clearTimers();
+                
+                if (!this.isAuthenticated) return;
+                
+                const warningDelay = Math.max(this.timeout - this.warningTime, 0);
+                this.log(`⏰ Timer configuré: avertissement dans ${warningDelay/1000}s, déconnexion dans ${this.timeout/1000}s`);
+                
+                // Timer pour l'avertissement
+                if (warningDelay > 0) {
+                    this.warningTimeoutRef = setTimeout(() => {
+                        this.log('⚠️ Affichage de l\'avertissement');
+                        if (this.isAuthenticated) {
+                            this.setShowWarning(true);
+                        }
+                    }, warningDelay);
+                }
+                
+                // Timer pour la déconnexion
+                this.timeoutRef = setTimeout(() => {
+                    this.log('⏰ Déconnexion automatique - Inactivité détectée');
+                    if (this.isAuthenticated) {
+                        this.forceLogout();
+                    }
+                }, this.timeout);
+            }
+            
+            setShowWarning(show) {
+                this.showWarning = show;
+                if (this.onWarningChange) {
+                    this.onWarningChange(show);
+                }
+            }
+            
+            forceLogout() {
+                this.log('🔒 DÉCONNEXION AUTOMATIQUE DÉCLENCHÉE !');
+                alert('✅ SUCCÈS: La déconnexion automatique fonctionne !');
+                this.setAuthenticated(false);
+            }
+            
+            continueSession() {
+                this.log('✅ Session prolongée par l\'utilisateur');
+                this.resetTimer();
+            }
+            
+            setupEventListeners() {
+                const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'keydown'];
+                
+                const throttledReset = this.throttle(() => {
+                    if (this.isAuthenticated) {
+                        this.resetTimer();
+                    }
+                }, 1000);
+                
+                events.forEach(event => {
+                    document.addEventListener(event, throttledReset, true);
+                });
+            }
+            
+            throttle(func, limit) {
+                let lastCall = 0;
+                return function() {
+                    const now = Date.now();
+                    if (now - lastCall >= limit) {
+                        lastCall = now;
+                        func.apply(this, arguments);
+                    }
+                };
+            }
+        }
+        
+        // Initialisation
+        const autoLogout = new AutoLogoutSimulator(
+            8000, // 8 secondes
+            () => {}, // onLogout sera géré dans forceLogout
+            3 // 3 secondes d'avertissement
+        );
+        
+        let countdownInterval = null;
+        
+        // Gestion de l'interface
+        autoLogout.onWarningChange = (showWarning) => {
+            const continueBtn = document.getElementById('continueBtn');
+            const status = document.getElementById('status');
+            
+            if (showWarning) {
+                continueBtn.style.display = 'inline-block';
+                status.className = 'status warning';
+                status.textContent = '⚠️ AVERTISSEMENT AFFICHÉ';
+            } else if (autoLogout.isAuthenticated) {
+                continueBtn.style.display = 'none';
+                status.className = 'status connected';
+                status.textContent = '🟢 Connecté';
+            }
+        };
+        
+        // Événements des boutons
+        document.getElementById('startBtn').onclick = () => {
+            autoLogout.log('🚀 DÉMARRAGE DU TEST');
+            autoLogout.setAuthenticated(true);
+            
+            // Interface
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('stopBtn').style.display = 'inline-block';
+            document.getElementById('status').className = 'status connected';
+            document.getElementById('status').textContent = '🟢 Connecté';
+            
+            // Countdown visuel
+            let countdown = 8;
+            document.getElementById('countdown').style.display = 'block';
+            document.getElementById('countdownValue').textContent = countdown;
+            
+            countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById('countdownValue').textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown').style.display = 'none';
+                }
+            }, 1000);
+        };
+        
+        document.getElementById('stopBtn').onclick = () => {
+            autoLogout.log('⏹️ ARRÊT DU TEST');
+            autoLogout.setAuthenticated(false);
+            
+            // Interface
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('continueBtn').style.display = 'none';
+            document.getElementById('status').className = 'status disconnected';
+            document.getElementById('status').textContent = '🔴 Déconnecté';
+            document.getElementById('countdown').style.display = 'none';
+            
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+        };
+        
+        document.getElementById('continueBtn').onclick = () => {
+            autoLogout.continueSession();
+        };
+    </script>
+</body>
+</html>

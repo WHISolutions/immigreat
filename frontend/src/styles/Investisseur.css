@@ -1,0 +1,163 @@
+.investisseur-section {
+  background-color: var(--color-neutral-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.business-info-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.business-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.business-info-header h5 {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.entreprises-list {
+  margin-bottom: var(--spacing-md);
+}
+
+.entreprise-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--color-neutral-light);
+}
+
+.entreprise-item:last-child {
+  border-bottom: none;
+}
+
+.entreprise-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.programme-investisseur-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.programme-investisseur-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.programme-investisseur-option input[type="checkbox"] {
+  margin: 0;
+}
+
+.sources-fonds-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.source-fonds-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.source-fonds-option input[type="checkbox"] {
+  margin: 0;
+}
+
+.form-inline-investisseur {
+  background-color: var(--color-neutral-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-inline-investisseur .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: flex-end;
+}
+
+.form-inline-investisseur .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-inline-investisseur .form-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.financial-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.financial-info-item {
+  background-color: var(--color-neutral-lighter);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
+  border-left: 3px solid var(--color-primary);
+}
+
+.financial-info-item label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.financial-info-item p {
+  margin: 0;
+  font-weight: var(--font-weight-medium);
+}
+
+.financial-info-item p.currency {
+  color: var(--color-success);
+}
+
+.actifs-section {
+  margin-top: var(--spacing-sm);
+}
+
+.actifs-section textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-neutral-medium);
+  border-radius: var(--border-radius-sm);
+}
+
+@media (max-width: 768px) {
+  .form-inline-investisseur .form-row {
+    flex-direction: column;
+  }
+  
+  .form-inline-investisseur .form-group {
+    width: 100%;
+  }
+  
+  .financial-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .programme-investisseur-options,
+  .sources-fonds-options {
+    grid-template-columns: 1fr;
+  }
+}

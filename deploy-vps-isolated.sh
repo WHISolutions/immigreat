@@ -30,7 +30,7 @@ info() {
 
 # Variables pour isolation
 APP_NAME="immigreat"
-APP_PORT="4000"
+APP_PORT="3000"
 APP_DIR="/opt/${APP_NAME}-${APP_PORT}"
 BACKUP_DIR="${APP_DIR}/backups"
 LOG_FILE="/var/log/${APP_NAME}-${APP_PORT}/deploy.log"

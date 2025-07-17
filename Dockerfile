@@ -17,7 +17,7 @@ COPY backend/ .
 RUN mkdir -p uploads
 
 # Exposer le port de l'application
-EXPOSE 3000
+EXPOSE 4000
 
 # Script de démarrage qui attend que MySQL soit prêt
 COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh

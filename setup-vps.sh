@@ -84,7 +84,7 @@ sudo ufw --force enable
 sudo ufw allow ssh
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
-sudo ufw allow 3000/tcp  # Port de l'application
+sudo ufw allow 4000/tcp  # Port de l'application
 sudo ufw allow 3306/tcp  # Port MySQL (si accès externe nécessaire)
 
 # Création du répertoire pour l'application

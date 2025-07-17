@@ -1,0 +1,36 @@
+# Fichier .dockerignore pour optimiser le build Docker
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+.env
+.nyc_output
+coverage
+.DS_Store
+.vscode
+*.log
+logs/
+.tmp/
+.cache/
+dist/
+build/
+
+# Fichiers de développement
+*.test.js
+*.spec.js
+test/
+tests/
+
+# Fichiers temporaires
+.temp/
+tmp/
+*.tmp
+
+# Base de données locale
+*.sqlite
+*.db
+
+# Fichiers de sauvegarde
+*.backup
+*.bak

@@ -1,0 +1,107 @@
+# Configuration Docker Compose pour production VPS
+version: '3.8'
+
+services:
+  # Service Base de données MySQL
+  db:
+    image: mysql:8.0
+    container_name: immigreat_mysql_prod
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"  # Bind seulement sur localhost pour sécurité
+    volumes:
+      - mysql_data_prod:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./backups:/backups
+    networks:
+      - immigreat_network_prod
+    command: --default-authentication-plugin=mysql_native_password --max_connections=200
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+      interval: 30s
+      start_period: 30s
+
+  # Service Application Node.js
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: immigreat_app_prod
+    restart: always
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: 3306
+      JWT_SECRET: ${JWT_SECRET}
+      FRONTEND_URL: ${FRONTEND_URL}
+      TZ: America/Montreal
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend/uploads:/usr/src/app/uploads
+      - app_logs_prod:/usr/src/app/logs
+      - /var/log/immigreat:/var/log/immigreat
+    networks:
+      - immigreat_network_prod
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      timeout: 10s
+      retries: 3
+      interval: 30s
+      start_period: 60s
+
+  # Service Nginx pour reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: immigreat_nginx_prod
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-prod.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - immigreat_network_prod
+
+  # Service de monitoring (optionnel)
+  watchtower:
+    image: containrrr/watchtower
+    container_name: immigreat_watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=3600  # Vérifier les mises à jour toutes les heures
+      - WATCHTOWER_INCLUDE_STOPPED=true
+    command: immigreat_app_prod
+
+# Volumes pour la persistance des données
+volumes:
+  mysql_data_prod:
+    driver: local
+  app_logs_prod:
+    driver: local
+
+# Réseau pour la communication entre services
+networks:
+  immigreat_network_prod:
+    driver: bridge
